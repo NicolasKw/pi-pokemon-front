@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -6,25 +7,28 @@ export default function Detail() {
 
     const { pokemonName } = useParams();
 
-    const [pokemon, setPokemon] = useState({});
-    
-    const [image, setImage] = useState(imageDreamWorld);
-    
-    useEffect(() => {
-        const downloadData = async() => {
-            try {
-                const { data } = await axios(`http://localhost:3001/pokemons/?name=${pokemonName}`);
-                setPokemon(data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        downloadData();
-    }, [pokemonName]);
+    const addedPokemons = useSelector(state => state.pokemons);
 
-    const { id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork } = pokemon;
-
+    const selectedPokemon = addedPokemons.find(pokemon => pokemon.name === pokemonName)
+    
+    //! ENTENDER POR QUÉ DE ESTA FORMA NO FUNCIONÓ
+    // useEffect(() => {
+    //     const downloadData = async() => {
+    //         try {
+    //             const { data } = await axios(`http://localhost:3001/pokemons/?name=${pokemonName}`);
+    //             setPokemon(data);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     downloadData();
+    // }, [pokemonName]);
+    
+    const { id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork } = selectedPokemon;
+    
     const typesNames = pokemonTypes.map(elem => elem.name);
+
+    const [image, setImage] = useState(imageDreamWorld);
 
     const changeImage = (image) => {
         setImage(image);
@@ -46,9 +50,9 @@ export default function Detail() {
         </h3>
         <img src={image} alt="pokemonImage" width='200px'/>
         <h3>Image: 
-            <button onClick={() => changeImage(imageDreamWorld)}>Dream World</button>
-            <button onClick={() => changeImage(imageHome)}>Home</button>
-            <button onClick={() => changeImage(imageArtwork)}>Artwork</button>
+            <button onClick={() => changeImage(imageDreamWorld)}>Classic</button>
+            <button onClick={() => changeImage(imageHome)}>3D</button>
+            <button onClick={() => changeImage(imageArtwork)}>Artistic</button>
         </h3>
     </div>
 }
