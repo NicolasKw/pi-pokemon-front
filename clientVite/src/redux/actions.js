@@ -1,4 +1,4 @@
-import { ADD_POKEMON, CREATE_POKEMON, DELETE_POKEMON } from "./actionsTypes";
+import { ADD_POKEMON, CREATE_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
 import axios from "axios";
 
 
@@ -21,10 +21,37 @@ export function addPokemon(name) {
     }
 }
 
-
 export function deletePokemon(name) {
     return {
         type: DELETE_POKEMON,
         payload: name
+    }
+}
+
+export function typeFilter(typeName) {
+    return {
+        type: TYPE_FILTER,
+        payload: typeName
+    }
+}
+
+export function originFilter(origin) {
+    return {
+        type: ORIGIN_FILTER,
+        payload: origin
+    }
+}
+
+export function nameOrder(orderBy) {
+    return {
+        type: NAME_ORDER,
+        payload: orderBy
+    }
+}
+
+export function attackOrder(orderBy) {
+    return {
+        type: ATTACK_ORDER,
+        payload: orderBy
     }
 }

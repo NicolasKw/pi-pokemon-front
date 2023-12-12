@@ -56,7 +56,8 @@ module.exports = async function getPokemonsByName(req,res) {
                         where: {name: typesNamesArrayOfNames}
                     })
             
-                    return res.status(200).json({id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork});
+                    // Retorno el JSON con una propiedad agregada API: true para saber que el Pokemon viene de la API
+                    return res.status(200).json({id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork, 'API': true});
         
                 // Si encuentra al Pokemon en la DB:
                 } else {

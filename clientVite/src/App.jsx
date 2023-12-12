@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const downloadTypes = async () => {
-      try {;
+      try {
         await axios('http://localhost:3001/types')
       } catch (error) {
         console.log(error);

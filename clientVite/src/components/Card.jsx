@@ -8,13 +8,14 @@ export default function Card({pokemon}) {
     const { name, pokemonTypes, imageDreamWorld, imageHome, imageArtwork } = pokemon;
 
     const typesNames = pokemonTypes.map(elem => elem.name);
-
+    
+    const [image, setImage] = useState(imageDreamWorld);
+    
     const dispatch = useDispatch();
     const closePokemon = () => {
         dispatch(deletePokemon(name));
     }
     
-    const [image, setImage] = useState(imageDreamWorld);
     const changeImage = (image) => {
         setImage(image);
     }
@@ -36,10 +37,10 @@ export default function Card({pokemon}) {
         </h3>
         <img src={image} alt="pokemonImage" width='200px'/>
         <h3>Image: 
-            <button onClick={() => changeImage(imageDreamWorld)}>Dream World</button>
-            <button onClick={() => changeImage(imageHome)}>Home</button>
-            <button onClick={() => changeImage(imageArtwork)}>Artwork</button>
+            <button onClick={() => changeImage(imageDreamWorld)}>Classic</button>
+            <button onClick={() => changeImage(imageHome)}>3D</button>
+            <button onClick={() => changeImage(imageArtwork)}>Artistic</button>
         </h3>
-        <Link to={`/detail/${name}`} pokemon={pokemon}><h3><button>Details</button></h3></Link>        
+        <h3><Link to={`/detail/${name}`}><button>Details</button></Link></h3>        
     </div>
 }

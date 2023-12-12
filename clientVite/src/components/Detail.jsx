@@ -7,7 +7,9 @@ export default function Detail() {
     const { pokemonName } = useParams();
 
     const [pokemon, setPokemon] = useState({});
-
+    
+    const [image, setImage] = useState(imageDreamWorld);
+    
     useEffect(() => {
         const downloadData = async() => {
             try {
@@ -18,13 +20,12 @@ export default function Detail() {
             }
         }
         downloadData();
-    }, [pokemonName])
+    }, [pokemonName]);
 
     const { id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork } = pokemon;
 
     const typesNames = pokemonTypes.map(elem => elem.name);
 
-    const [image, setImage] = useState(imageDreamWorld);
     const changeImage = (image) => {
         setImage(image);
     }
