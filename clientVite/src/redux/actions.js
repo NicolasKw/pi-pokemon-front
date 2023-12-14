@@ -1,4 +1,4 @@
-import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
+import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER, SEARCH_POKEMONS } from "./actionsTypes";
 import axios from "axios";
 
 
@@ -84,5 +84,22 @@ export function attackOrder(orderBy) {
     return {
         type: ATTACK_ORDER,
         payload: orderBy
+    }
+}
+
+export function searchPokemons(name) {
+
+    return async (dispatch) => {
+        try {
+            const { data } = await axios(`http://localhost:3001/pokemons/name?name=${name}`);
+
+            dispatch({
+                type: SEARCH_POKEMONS,
+                payload: data
+            })
+    
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

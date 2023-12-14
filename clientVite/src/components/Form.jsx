@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes, addPokemon } from "../redux/actions";
+import validation from "./validation";
 
 export default function Form() {
 
@@ -22,6 +23,8 @@ export default function Form() {
         image3d: '',
         imageArtistic: ''
     })
+
+    const [errors , setErrors] = useState({});
 
     // En caso que no se haya cargado previamente la data de types
     useEffect(() => {
@@ -70,7 +73,7 @@ export default function Form() {
 
     return <div>
         <form action="" onSubmit={handleSubmit}>
-            <input type="text" placeholder="Name" value={newPokemon.name} name="name" onChange={handleChange}/><br />
+            <input type="text" placeholder="Name" value={newPokemon.name} name="name" autoComplete="off" onChange={handleChange}/><br />
             <input type="number" placeholder="HP" value={newPokemon.hp} name="hp" onChange={handleChange}/><br />
             <input type="number" placeholder="Attack" value={newPokemon.attack} name="attack" onChange={handleChange}/><br />
             <input type="number" placeholder="Defense" value={newPokemon.defense} name="defense" onChange={handleChange}/><br />

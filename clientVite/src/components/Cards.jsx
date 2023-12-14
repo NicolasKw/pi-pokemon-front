@@ -17,7 +17,7 @@ export default function Cards() {
             dispatch(getTypes());
             dispatch(getPokemons());
         }
-    }, [])
+    }, [addedPokemons])
 
     const dispatch = useDispatch();
 

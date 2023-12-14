@@ -1,4 +1,4 @@
-import { GET_POKEMONS, GET_TYPES, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER, ADD_POKEMON } from './actionsTypes';
+import { GET_POKEMONS, GET_TYPES, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER, ADD_POKEMON, SEARCH_POKEMONS } from './actionsTypes';
 
 const initialState = {
     pokemons: [],
@@ -77,6 +77,12 @@ function reducer(state = initialState, { type, payload }) {
             } else return {
                 ...state,
                 pokemons: state.pokemons.sort((a, b) => b.attack - a.attack)
+            }
+
+        case SEARCH_POKEMONS:
+            return {
+                ...state,
+                pokemons: [payload]
             }
 
 
