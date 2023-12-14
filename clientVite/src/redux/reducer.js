@@ -1,18 +1,25 @@
-import { ADD_POKEMON, CREATE_POKEMON, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER } from './actionsTypes';
+import { ADD_POKEMONS, ADD_TYPES, CREATE_POKEMON, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER } from './actionsTypes';
 
 const initialState = {
     pokemons: [],
-    allPokemons: []
+    allPokemons: [],
+    types: []
 }
 
 function reducer(state = initialState, { type, payload }) {
     switch(type) {
 
-        case ADD_POKEMON:
+        case ADD_POKEMONS:
             return {
                 ...state, 
-                pokemons: [...state.pokemons, payload],
-                allPokemons: [...state.allPokemons, payload]
+                pokemons: payload,
+                allPokemons: payload
+            }
+
+        case ADD_TYPES:
+            return {
+                ...state,
+                types: payload
             }
 
         case DELETE_POKEMON:
@@ -27,10 +34,8 @@ function reducer(state = initialState, { type, payload }) {
                 ...state,
                 pokemons: 
                     state.allPokemons.filter(pokemon => {
-                        if(payload !== 'all') {
-                            const types = pokemon.pokemonTypes.map(elem => elem.name);
-                            return types.includes(payload);
-                        } else return true;
+                        if(payload !== 'all') return pokemon.typesNames.includes(payload);
+                        else return true;
                     })
             }
 
@@ -39,11 +44,9 @@ function reducer(state = initialState, { type, payload }) {
                 ...state,
                 pokemons:
                     state.allPokemons.filter(pokemon => {
-                        if(payload === 'API') {
-                            return pokemon.API;
-                        } else if (payload === 'DB') {
-                            return !pokemon.hasOwnProperty('API');
-                        } else return true;
+                        if(payload === 'API') return (typeof pokemon.id === 'number') ;
+                        else if (payload === 'DB') return (typeof pokemon.id !== 'number');
+                        else return true;
                     })
             }
 

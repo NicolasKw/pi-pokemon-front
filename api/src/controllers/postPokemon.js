@@ -1,11 +1,9 @@
-const { Pokemon, Types, Image } = require('../db');
+const { Pokemon, Types } = require('../db');
 
 module.exports = async function postPokemon(req, res) {
     try {
         const { 
-            id, 
             name, 
-            id: imageId, 
             hp, 
             attack, 
             defense, 
@@ -13,28 +11,22 @@ module.exports = async function postPokemon(req, res) {
             height, 
             weight, 
             types,
-            dream_world,
-            home,
-            artwork } = req.body;
+            imageClassic,
+            image3d,
+            imageArtistic } = req.body;
     
         // Se busca o crea la entrada en el modelo Pokemon
-        const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ where: {id, name, imageId, hp, attack, defense, speed, height, weight} });
+        const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ where: {name, hp, attack, defense, speed, height, weight, imageClassic} });
+
+        // Agrego image3d e imageArtistic si fueron recibidas
+        image3d && pokemon.image3d;
+        imageArtistic && pokemon.imageArtistic;
         
         // Se buscan los tipos en el modelo Types
-        const typesNames = types.map(type => type.name); // Se extraen los nombres de los tipos recibidos
-        console.log(typesNames)
-        const getTypes = await Types.findAll({ where: {name: typesNames} }) // Se buscan esos nombres en Types
-        const getTypesIds = getTypes.map(elem => elem.id) // Se extraen los id de esos nombres
+        const getTypes = await Types.findAll({ where: {name: types} }) // Se buscan esos types en Types
+        const getTypesIds = getTypes.map(elem => elem.id) // Se extraen los id de esos types
         // Se asocian Pokemon y Types en la tabla intermedia
         await pokemon.addTypes(getTypesIds);
-
-        // Se busca o crea la/s imágenes en el modelo Images
-        const imageAttributes = { id: imageId, dream_world};
-        home && imageAttributes.home;
-        artwork && imageAttributes.artwork;
-        const [image, createdImage] = await Image.findOrCreate({ where: imageAttributes })
-        // Se asocia Image a Pokemon
-        await pokemon.setImage(imageId)
 
         // Devuelvo un JSON con el resultado de la solicitud
         createdPokemon

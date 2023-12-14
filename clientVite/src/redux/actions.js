@@ -1,22 +1,36 @@
-import { ADD_POKEMON, CREATE_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
+import { ADD_POKEMONS, ADD_TYPES, CREATE_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
 import axios from "axios";
 
 
-export function addPokemon(name) {
-
-    const URL_BASE = 'http://localhost:3001/pokemons/?name=';
+export function addPokemons(name) {
 
     return async (dispatch) => {
         try {
-            const { data } = await axios(`${URL_BASE}${name}`);
+            const { data } = await axios('http://localhost:3001/pokemons');
 
             dispatch({
-                type: ADD_POKEMON,
+                type: ADD_POKEMONS,
                 payload: data
             })
     
         } catch (error) {
             console.log(error);
+        }
+    }
+}
+
+export function addTypes() {
+
+    return async (dispatch) => {
+        try {
+            const { data } = await axios('http://localhost:3001/types');
+
+            dispatch({
+                type: ADD_TYPES,
+                payload: data
+            })
+        } catch (error) {
+            
         }
     }
 }

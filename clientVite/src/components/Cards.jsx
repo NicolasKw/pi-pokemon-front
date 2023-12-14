@@ -1,32 +1,24 @@
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { typeFilter, originFilter, nameOrder, attackOrder } from '../redux/actions';
+import { typeFilter, originFilter, nameOrder, attackOrder, addPokemons, addTypes } from '../redux/actions';
 import Card from './Card'
 
 export default function Cards() {
 
+    const [aux, setAux] = useState(false); // Necesario para que se vuelva a renderizar el componente cuando hago un ordenamiento
+
     const addedPokemons = useSelector(state => state.pokemons);
+    const types = useSelector(state => state.types);
 
-    const [types, setTypes] = useState([]);
-    
-    const dispatch = useDispatch();
-
-    // Traigo todos los types de la DB
     useEffect(() => {
-        const downloadData = async() => {
-            try {
-                const { data } = await axios('http://localhost:3001/types');
-                const typesNames = data.map(elem => elem.name);
-                setTypes(typesNames);
-            } catch (error) {
-                console.log(error);
-            }
+        if(!addedPokemons.length || !types.length) {
+            dispatch(addTypes());
+            dispatch(addPokemons());
         }
-        downloadData();
-    }, []);
+    }, [])
 
+    const dispatch = useDispatch();
 
     function handleTypeFilter(event) {
         dispatch(typeFilter(event.target.value));
@@ -38,43 +30,44 @@ export default function Cards() {
 
     function handleNameOrder(event) {
         dispatch(nameOrder(event.target.value));
+        aux ? setAux(false) : setAux(true);
     }
 
     function handleAttackOrder(event) {
-        dispatch(attackOrder(event.target.value))
+        dispatch(attackOrder(event.target.value));
+        aux ? setAux(false) : setAux(true);
     }
-
 
     return <div>
         {/* Filtro por type */}
         <label htmlFor="typeFilter">Filter by type:</label>
         <select name="typeFilter" id="typeFilter" onChange={handleTypeFilter}>
             {/* Creo una opción para mostrar todos */}
-            <option key='all' value="all">All</option>
+            <option value="all" key='allNames'>All</option>
             {/* Despliego todos los types que traje de la DB */}
-            {types.map(type => <option key={type} value={type}>{type[0].toUpperCase() + type.slice(1)}</option>)}
+            {types.map(type => <option key={type.id} value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>)}
         </select>
 
         {/* Filtro por origen */}
         <label htmlFor="originFilter">Filter by data origin</label>
         <select name="originFilter" id="originFilter" onChange={handleOriginFilter}>
-            <option value="all">All</option>
-            <option value="API">API</option>
-            <option value="DB">Database</option>
+            <option value="all" key='allOrigins'>All</option>
+            <option value="API" key='API'>API</option>
+            <option value="DB" key='DB'>Database</option>
         </select>
 
         {/* Orden por nombre */}
         <label htmlFor="nameOrder">Order by Name</label>
         <select name="nameOrder" id="nameOrder" onChange={handleNameOrder}>
-            <option value="A">Ascendant</option>
-            <option value="D">Descendant</option>
+            <option value="A" key='nameA'>Ascendant</option>
+            <option value="D" key='nameD'>Descendant</option>
         </select>
 
         {/* Orden por ataque */}
         <label htmlFor="attackOrder">Order by Attack</label>
         <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder}>
-            <option value="A">Ascendant</option>
-            <option value="D">Descendant</option>
+            <option value="A" key='attackA'>Ascendant</option>
+            <option value="D" key='attackD'>Descendant</option>
         </select>
 
         {/* Mostrar las cards */}

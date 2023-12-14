@@ -1,4 +1,5 @@
-export const ADD_POKEMON = 'ADD_POKEMON';
+export const ADD_POKEMONS = 'ADD_POKEMONS';
+export const ADD_TYPES = 'ADD_TYPES';
 export const CREATE_POKEMON = 'CREATE_POKEMON';
 export const DELETE_POKEMON = 'DELETE_POKEMON';
 export const TYPE_FILTER = 'TYPE_FILTER';

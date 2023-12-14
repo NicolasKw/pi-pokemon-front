@@ -4,60 +4,52 @@ const { Pokemon, Types } = require('../db');
 const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/';
 
 module.exports = async function getPokemonById (req,res) {
-    try {
-        const { idPokemon } = req.params;
+    const { idPokemon } = req.params;
 
-        // Busco el Pokemon en la DB:
-        let pokemon = await Pokemon.findByPk(idPokemon);
+    //* Si el id tiene una longitud menor a 5, busco al Pokemons en la API
+    if(idPokemon.length < 5) {
 
         try {
-            // Si no encuentra al Pokemon en la DB lo busca en la API:
-            if(!pokemon) {
-                pokemon = await axios(`${URL_BASE}${idPokemon}`);
+            const pokemon = await axios(`${URL_BASE}${idPokemon}`);
 
-                // Si encuentra al Pokemon en la API:
-                const { id, name, stats, height, weight, types: typesArray, sprites: images } = pokemon.data
+            // Si encuentra al Pokemon en la API:
+            const { id, name, stats, height, weight, types, sprites  } = pokemon.data;
 
-                const imageDreamWorld = images.other.dream_world.front_default;
-                const imageHome = images.other.home.front_default;
-                const imageArtwork = images.other['official-artwork'].front_default;
+            // Extraigo las propiedades hp, attack, defense y speed de stats
+            const hp = stats[0].base_stat;
+            const attack = stats[1].base_stat;
+            const defense = stats[2].base_stat;
+            const speed = stats[5].base_stat;
 
-                // Extraigo los atributos necesarios que se encuentran en la propiedad base_stat:
-                //! MEJORAR
-                const hp = stats[0].base_stat;
-                const attack = stats[1].base_stat;
-                const defense = stats[2].base_stat;
-                const speed = stats[5].base_stat;
-                
-                // Extraigo los nombres de los types es typesArray:
-                //! MEJORAR
-                const typesNamesArrayOfObjects = typesArray.map(type => ({ name: type.type.name }));
-                const typesNamesArrayOfNames = typesNamesArrayOfObjects.map(elem => elem.name);
+            // Extraigo los nombres de los tipos de types
+            const typesNames = types.map(elem => elem.type.name);
 
-                // Obtengo los IDs de los typesNames del modelo Types:
-                const pokemonTypes = await Types.findAll({ 
-                    attributes: ['id', 'name'],
-                    where: {name: typesNamesArrayOfNames}
-                })
+            // Extraigo las imágenes de sprites
+            const imageClassic = sprites.other.dream_world.front_default;
+            const image3d = sprites.other.home.front_default;
+            const imageArtistic = sprites.other['official-artwork'].front_default;
 
-                // Devuelvo un JSON con el pokemon encontrado
-                return res.status(200).json({id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork});
+            // Devuelvo un JSON con el pokemon encontrado
+            return res.status(200).json({id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d,  imageArtistic, typesNames});
 
-            // Si encuentra al Pokemon en la DB:
-            } else {
-                // Traigo todos los types asociados a ese Pokemon
-                const pokemonTypes = (await pokemon.getTypes()).map(type => ({id: type.id, name: type.name}))
-
-                // Retorno la info del pokemon y sus types
-                res.status(200).json({ pokemon, pokemonTypes });
-            }
-
-        // Si no encuentra al Pokemon en la API:
         } catch (error) {
             res.status(404).json({message: `Pokemon with ID ${idPokemon} not found`})
         }
 
-    } catch (error) {
-        return res.status(500).json({error: error.message})
+    //* Si el id recibido no es un número, lo busco en la DB
+    } else {
+
+        try {
+            let pokemon = await Pokemon.findByPk(idPokemon);
+
+            // Traigo todos los types asociados a ese Pokemon
+            const pokemonTypes = (await pokemon.getTypes()).map(elem => elem.name)
+
+            // Retorno la info del pokemon y sus types
+            res.status(200).json({ pokemon, pokemonTypes });
+
+        } catch (error) {
+            res.status(404).json({message: `Pokemon with ID ${idPokemon} not found`})
+        }
     }
 }
