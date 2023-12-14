@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { typeFilter, originFilter, nameOrder, attackOrder, addPokemons, addTypes } from '../redux/actions';
+import { typeFilter, originFilter, nameOrder, attackOrder, getPokemons, getTypes } from '../redux/actions';
 import Card from './Card'
 
 export default function Cards() {
@@ -11,10 +11,11 @@ export default function Cards() {
     const addedPokemons = useSelector(state => state.pokemons);
     const types = useSelector(state => state.types);
 
+    // En caso que no venga desde la Landing o no hayan terminado de cargar la información en la Landing:
     useEffect(() => {
         if(!addedPokemons.length || !types.length) {
-            dispatch(addTypes());
-            dispatch(addPokemons());
+            dispatch(getTypes());
+            dispatch(getPokemons());
         }
     }, [])
 

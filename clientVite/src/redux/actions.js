@@ -1,15 +1,15 @@
-import { ADD_POKEMONS, ADD_TYPES, CREATE_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
+import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER } from "./actionsTypes";
 import axios from "axios";
 
 
-export function addPokemons(name) {
+export function getPokemons() {
 
     return async (dispatch) => {
         try {
             const { data } = await axios('http://localhost:3001/pokemons');
 
             dispatch({
-                type: ADD_POKEMONS,
+                type: GET_POKEMONS,
                 payload: data
             })
     
@@ -19,26 +19,43 @@ export function addPokemons(name) {
     }
 }
 
-export function addTypes() {
+export function getTypes() {
 
     return async (dispatch) => {
         try {
             const { data } = await axios('http://localhost:3001/types');
 
             dispatch({
-                type: ADD_TYPES,
+                type: GET_TYPES,
                 payload: data
             })
         } catch (error) {
-            
+            console.log(error);
         }
     }
 }
 
-export function deletePokemon(name) {
+export function addPokemon(pokemon) {
     return {
-        type: DELETE_POKEMON,
-        payload: name
+        type: ADD_POKEMON,
+        payload: pokemon
+    }
+}
+
+export function deletePokemon(id) {
+
+    return async (dispatch) => {
+        try {
+            (typeof id !== 'number') && await axios.delete(`http://localhost:3001/pokemons/${id}`)
+            
+            dispatch ({
+                type: DELETE_POKEMON,
+                payload: id
+            })
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

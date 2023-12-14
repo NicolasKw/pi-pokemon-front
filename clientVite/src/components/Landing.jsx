@@ -1,15 +1,14 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addPokemons, addTypes } from "../redux/actions";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getPokemons, getTypes } from "../redux/actions";
 
 export default function Landing({login}) {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(addTypes());
-        dispatch(addPokemons());
+        dispatch(getTypes());
+        dispatch(getPokemons());
     }, [])
 
     return <div>

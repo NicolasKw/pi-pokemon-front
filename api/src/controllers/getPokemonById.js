@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Pokemon, Types } = require('../db');
+const { Pokemon } = require('../db');
 
 const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/';
 
@@ -43,10 +43,10 @@ module.exports = async function getPokemonById (req,res) {
             let pokemon = await Pokemon.findByPk(idPokemon);
 
             // Traigo todos los types asociados a ese Pokemon
-            const pokemonTypes = (await pokemon.getTypes()).map(elem => elem.name)
+            const typesNames = (await pokemon.getTypes()).map(elem => elem.name)
 
             // Retorno la info del pokemon y sus types
-            res.status(200).json({ pokemon, pokemonTypes });
+            res.status(200).json({ pokemon, typesNames });
 
         } catch (error) {
             res.status(404).json({message: `Pokemon with ID ${idPokemon} not found`})

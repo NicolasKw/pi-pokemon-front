@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPokemons } from "../redux/actions";
+import { getPokemons } from "../redux/actions";
 
 export default function SearchBar() {
 
@@ -37,13 +37,13 @@ export default function SearchBar() {
             }
 
             // Agrego el Pokemon buscado
-            dispatch(addPokemon(name));
+            dispatch(getPokemons(name));
             setName('');
         }       
     }
 
     return <div>
-        <input type="text" placeholder="Write the Pokemon name" onChange={handleChange} value={name} />
+        <input type="text" id="searchBar" placeholder="Write the Pokemon name" onChange={handleChange} value={name} />
         <button onClick={searchPokemon} >Search</button>
     </div>
 }

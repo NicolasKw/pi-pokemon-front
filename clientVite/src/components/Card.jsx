@@ -5,14 +5,15 @@ import { Link } from "react-router-dom";
 
 export default function Card({pokemon}) {
     
-    const { name, typesNames, imageClassic, image3d, imageArtistic } = pokemon;
+    const { id, name, typesNames, imageClassic, image3d, imageArtistic } = pokemon;
 
     
     const [image, setImage] = useState(imageClassic);
     
     const dispatch = useDispatch();
+
     const closePokemon = () => {
-        dispatch(deletePokemon(name));
+        dispatch(deletePokemon(id));
     }
     
     const changeImage = (image) => {
@@ -20,7 +21,8 @@ export default function Card({pokemon}) {
     }
 
     return <div>
-        <button onClick={closePokemon}>X</button>
+        <Link to={`/detail/${id}`}><button>Details</button></Link>      
+        <button onClick={closePokemon}>Delete</button>
         <h3>Name: {name[0].toUpperCase() + name.slice(1)}</h3>
         <h3>Types: 
             <ol>
@@ -30,9 +32,8 @@ export default function Card({pokemon}) {
         <img src={image} alt="pokemonImage" width='200px'/>
         <h3>Image: 
             <button onClick={() => changeImage(imageClassic)}>Classic</button>
-            <button onClick={() => changeImage(image3d)}>3D</button>
-            <button onClick={() => changeImage(imageArtistic)}>Artistic</button>
+            {image3d && <button onClick={() => changeImage(image3d)}>3D</button>}
+            {imageArtistic && <button onClick={() => changeImage(imageArtistic)}>Artistic</button>}
         </h3>
-        <h3><Link to={`/detail/${name}`}><button>Details</button></Link></h3>        
     </div>
 }

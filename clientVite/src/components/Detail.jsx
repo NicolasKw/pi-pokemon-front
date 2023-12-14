@@ -5,30 +5,25 @@ import { useParams } from "react-router-dom";
 
 export default function Detail() {
 
-    const { pokemonName } = useParams();
+    const { idPokemon } = useParams();
 
-    const addedPokemons = useSelector(state => state.pokemons);
+    const [pokemon, setPokemon] = useState({})
 
-    const selectedPokemon = addedPokemons.find(pokemon => pokemon.name === pokemonName)
+    useEffect(() => {
+        const downloadData = async() => {
+            try {
+                const { data } = await axios(`http://localhost:3001/pokemons/${idPokemon}`);
+                setPokemon(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        downloadData();
+    }, [idPokemon]);
     
-    //! ENTENDER POR QUÉ DE ESTA FORMA NO FUNCIONÓ
-    // useEffect(() => {
-    //     const downloadData = async() => {
-    //         try {
-    //             const { data } = await axios(`http://localhost:3001/pokemons/?name=${pokemonName}`);
-    //             setPokemon(data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     downloadData();
-    // }, [pokemonName]);
+    const { id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d, imageArtistic, typesNames } = pokemon;
     
-    const { id, name, hp, attack, defense, speed, height, weight, pokemonTypes, imageDreamWorld, imageHome, imageArtwork } = selectedPokemon;
-    
-    const typesNames = pokemonTypes.map(elem => elem.name);
-
-    const [image, setImage] = useState(imageDreamWorld);
+    const [image, setImage] = useState(imageClassic);
 
     const changeImage = (image) => {
         setImage(image);
@@ -50,9 +45,9 @@ export default function Detail() {
         </h3>
         <img src={image} alt="pokemonImage" width='200px'/>
         <h3>Image: 
-            <button onClick={() => changeImage(imageDreamWorld)}>Classic</button>
-            <button onClick={() => changeImage(imageHome)}>3D</button>
-            <button onClick={() => changeImage(imageArtwork)}>Artistic</button>
+            <button onClick={() => changeImage(imageClassic)}>Classic</button>
+            <button onClick={() => changeImage(image3d)}>3D</button>
+            <button onClick={() => changeImage(imageArtistic)}>Artistic</button>
         </h3>
     </div>
 }

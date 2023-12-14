@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTypes, addPokemon } from "../redux/actions";
 
 export default function Form() {
 
-    const [types, setTypes] = useState([]);
+    const types = useSelector(state => state.types)
+
+    const dispatch = useDispatch();
 
     const [newPokemon, setNewPokemon] = useState({
         name: '',
@@ -19,19 +23,12 @@ export default function Form() {
         imageArtistic: ''
     })
 
-    // Traigo todos los types de la DB
+    // En caso que no se haya cargado previamente la data de types
     useEffect(() => {
-        const downloadData = async() => {
-            try {
-                const { data } = await axios('http://localhost:3001/types');
-                const typesNames = data.map(elem => elem.name);
-                setTypes(typesNames);
-            } catch (error) {
-                console.log(error);
-            }
+        if(!types.length) {
+            dispatch(getTypes());
         }
-        downloadData();
-    }, []);
+    }, [])
 
     const handleChange = (event) => {
         setNewPokemon({
@@ -40,11 +37,31 @@ export default function Form() {
         })
     }
 
+    const handleCheckbox = (event) => {
+        const { checked, value } = event.target;
+        setNewPokemon((prevPokemon) => {
+            if (checked) {
+                return {
+                    ...prevPokemon,
+                    types: [...prevPokemon.types, value.toLowerCase()],
+                };
+            } else {
+                return {
+                    ...prevPokemon,
+                    types: prevPokemon.types.filter(
+                        (type) => type !== value.toLowerCase()
+                    ),
+                };
+            }
+        });
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:3001/pokemons/', newPokemon);
-            alert("Pokemon has been created successfully");
+            const { data } = await axios.post('http://localhost:3001/pokemons/', newPokemon); // Creo y obtengo el nuevo registro
+            dispatch(addPokemon(data)) // Actualizo el estado global
+            alert(`Pokemon "${data.name[0].toUpperCase() + data.name.slice(1)}" has been created successfully with ID ${data.id}`);
         } catch (error) {
             alert("Pokemon has not been created")
             console.log(error);           
@@ -63,9 +80,9 @@ export default function Form() {
             <fieldset>
                 <legend>Choose your Pokemon's types</legend>
                 {types.map(type => { 
-                    return <div>
-                        <input type="checkbox" id={type} name="types" value={newPokemon.types} onChange={handleChange}/>
-                        <label htmlFor={type} key={type}>{type[0].toUpperCase() + type.slice(1)}</label> 
+                    return <div key={type.id}>
+                        <input type="checkbox" id={type.id} name="types" value={type.name} onChange={handleCheckbox}/>
+                        <label htmlFor={type.id}>{type.name[0].toUpperCase() + type.name.slice(1)}</label> 
                     </div>
                 })}
             </fieldset>

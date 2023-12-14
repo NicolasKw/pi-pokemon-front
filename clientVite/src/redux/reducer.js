@@ -1,4 +1,4 @@
-import { ADD_POKEMONS, ADD_TYPES, CREATE_POKEMON, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER } from './actionsTypes';
+import { GET_POKEMONS, GET_TYPES, DELETE_POKEMON, TYPE_FILTER, ORIGIN_FILTER, NAME_ORDER, ATTACK_ORDER, ADD_POKEMON } from './actionsTypes';
 
 const initialState = {
     pokemons: [],
@@ -9,24 +9,31 @@ const initialState = {
 function reducer(state = initialState, { type, payload }) {
     switch(type) {
 
-        case ADD_POKEMONS:
+        case GET_POKEMONS:
             return {
                 ...state, 
                 pokemons: payload,
                 allPokemons: payload
             }
 
-        case ADD_TYPES:
+        case GET_TYPES:
             return {
                 ...state,
                 types: payload
             }
 
+        case ADD_POKEMON:
+            return {
+                ...state,
+                pokemons: [...state.pokemons, payload],
+                allPokemons: [...state.allPokemons, payload]
+            }
+
         case DELETE_POKEMON:
             return {
                 ...state,
-                pokemons: state.pokemons.filter(pokemon => pokemon.name !== payload),
-                allPokemons: state.allPokemons.filter(pokemon => pokemon.name !== payload)
+                pokemons: state.pokemons.filter(pokemon => pokemon.id !== payload),
+                allPokemons: state.allPokemons.filter(pokemon => pokemon.id !== payload)
             }
 
         case TYPE_FILTER:

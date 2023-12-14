@@ -39,7 +39,7 @@ function App() {
       <Route path='/' element={<Landing login={login} />} />
       <Route path='/home' element={<Cards />} />
       <Route path='/form' element={<Form />} />
-      <Route path='/detail/:pokemonName' element={<Detail />} />
+      <Route path='/detail/:idPokemon' element={<Detail />} />
     </Routes>
   </div>
 }
