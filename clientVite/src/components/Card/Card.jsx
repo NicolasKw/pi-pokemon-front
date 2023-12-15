@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
-import { deletePokemon } from "../redux/actions";
+import { deletePokemon } from "../../redux/actions";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import style from "./Card.module.css"
 
 export default function Card({pokemon}) {
     
@@ -20,8 +21,8 @@ export default function Card({pokemon}) {
         setImage(image);
     }
 
-    return <div>
-        <Link to={`/detail/${id}`}><button>Details</button></Link>      
+    return <div className={style.div} >
+        <button><Link to={`/detail/${id}`}>Details</Link></button>      
         <button onClick={closePokemon}>Delete</button>
         <h3>Name: {name[0].toUpperCase() + name.slice(1)}</h3>
         <h3>Types: 

@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { typeFilter, originFilter, nameOrder, attackOrder, getPokemons, getTypes } from '../redux/actions';
-import Card from './Card'
+import { typeFilter, originFilter, nameOrder, attackOrder, getPokemons, getTypes } from '../../redux/actions';
+import Card from '../Card/Card'
+import style from "./Cards.module.css"
 
 export default function Cards() {
 
@@ -71,7 +72,9 @@ export default function Cards() {
             <option value="D" key='attackD'>Descendant</option>
         </select>
 
-        {/* Mostrar las cards */}
-        {addedPokemons.map(pokemon => <Card key={pokemon.id} pokemon={pokemon} />)}
+        <div className={style.cards} >
+            {/* Mostrar las cards */}
+            {addedPokemons.map(pokemon => <Card key={pokemon.id} pokemon={pokemon} />)}
+        </div>
     </div>
 }

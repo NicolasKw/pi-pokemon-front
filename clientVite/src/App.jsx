@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Landing from './components/Landing';
-import Cards from './components/Cards';
+import Cards from './components/Cards/Cards';
 import Form from './components/Form';
 import Detail from './components/Detail';
 import Nav from './components/Nav';
