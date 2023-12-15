@@ -38,6 +38,11 @@ export default function Form() {
             ...newPokemon,
             [event.target.name]: event.target.value.toLowerCase()
         })
+
+        setErrors(validation({
+            ...newPokemon,
+            [event.target.name]: event.target.value,
+        }))
     }
 
     const handleCheckbox = (event) => {
@@ -48,14 +53,23 @@ export default function Form() {
                 ...newPokemon,
                 typesNames: [...newPokemon.typesNames, value.toLowerCase()]
             }) 
+            setErrors(validation({
+                ...newPokemon,
+                typesNames: [...newPokemon.typesNames, value]
+            }))
         } else {
             setNewPokemon ({
                 ...newPokemon,
                 typesNames: newPokemon.typesNames.filter(type => type !== value.toLowerCase())
             })
+            setErrors(validation({
+                ...newPokemon,
+                typesNames: newPokemon.typesNames.filter(type => type !== value.toLowerCase())
+            }))
         }
-    }
 
+
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -64,17 +78,26 @@ export default function Form() {
             dispatch(addPokemon(data)) // Actualizo el estado global
             alert(`Pokemon "${data.name[0].toUpperCase() + data.name.slice(1)}" has been created successfully with ID ${data.id}`);
         } catch (error) {
-            alert("Pokemon has not been created")
-            console.log(error);           
+            try {
+                // Si hay errores de validación
+                if(Object.keys(errors).length) alert("Pokemon creation failed: data is missing");
+                // Si ya se creó un Pokemon igual previamente
+                else {
+                    const { data } = await axios(`http://localhost:3001/pokemons/name?name=${newPokemon.name}`);
+                    alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" and same attributes has been created already`);
+                }
+            } catch (error) {
+                console.log({error});                
+            }
         }
 
         setErrors(validation({
             ...newPokemon,
-            [event.target.name]: event.target.value,
             typesNames: newPokemon.typesNames
         }))
     }
 
+    // Extraigo todas las validaciones
     const { 
         nameValidation,
         nameNotNull,

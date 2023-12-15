@@ -42,7 +42,7 @@ module.exports = async function postPokemon(req, res) {
             }   
             createdPokemon
                 ? res.status(201).json(response)
-                : res.status(200).json({message: "Pokemon was already created"});
+                : res.status(304).json();
         
     } catch (error) {
         res.status(500).json({error: error.message});
