@@ -10,21 +10,26 @@ module.exports = async function postPokemon(req, res) {
                 speed, 
                 height, 
                 weight, 
-                types,
+                typesNames,
                 imageClassic,
                 image3d,
                 imageArtistic } = req.body;
+
+            // Se verifica que se hayan recibido typesNames
+            if(!typesNames.length) throw Error("Types missing")
         
             // Se busca o crea la entrada en el modelo Pokemon
-            const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ where: {name, hp, attack, defense, speed, height, weight, imageClassic} });
+            const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ where: {name, hp, attack, defense, height, weight, imageClassic} });
 
+            // Agrego speed si fue recibida
+            if(speed) pokemon.speed = speed;
             // Agrego image3d e imageArtistic si fueron recibidas
             if(image3d) pokemon.image3d = image3d;
             if(imageArtistic) pokemon.imageArtistic = imageArtistic;
             await pokemon.save();
             
             // Se buscan los tipos en el modelo Types
-            const getTypes = await Types.findAll({ where: {name: types} }) // Se buscan esos types en Types
+            const getTypes = await Types.findAll({ where: {name: typesNames} }) // Se buscan esos types en Types
             const getTypesIds = getTypes.map(elem => elem.id) // Se extraen los id de esos types
             // Se asocian Pokemon y Types en la tabla intermedia
             await pokemon.addTypes(getTypesIds);
@@ -33,7 +38,7 @@ module.exports = async function postPokemon(req, res) {
             // Devuelvo un JSON con el resultado de la solicitud
             const response = {
                 ...pokemon.dataValues,
-                typesNames: types
+                typesNames: typesNames
             }   
             createdPokemon
                 ? res.status(201).json(response)
