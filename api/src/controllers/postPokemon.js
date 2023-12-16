@@ -14,12 +14,12 @@ module.exports = async function postPokemon(req, res) {
                 imageClassic,
                 image3d,
                 imageArtistic } = req.body;
-
-            // Se verifica que se hayan recibido typesNames
-            if(!typesNames.length) throw Error("Types missing")
         
             // Se busca o crea la entrada en el modelo Pokemon
-            const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ where: {name, hp, attack, defense, height, weight, imageClassic} });
+            const [pokemon, createdPokemon] = await Pokemon.findOrCreate({ 
+                where: {name},
+                defaults: {hp, attack, defense, height, weight, imageClassic} 
+            });
 
             // Agrego speed si fue recibida
             if(speed) pokemon.speed = speed;

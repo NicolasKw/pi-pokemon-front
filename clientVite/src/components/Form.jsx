@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes, addPokemon } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 import validation from "./validation";
 
 export default function Form() {
@@ -9,6 +10,7 @@ export default function Form() {
     const types = useSelector(state => state.types)
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [newPokemon, setNewPokemon] = useState({
         name: '',
@@ -67,16 +69,16 @@ export default function Form() {
                 typesNames: newPokemon.typesNames.filter(type => type !== value.toLowerCase())
             }))
         }
-
-
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         try {
             const { data } = await axios.post('http://localhost:3001/pokemons/', newPokemon); // Creo y obtengo el nuevo registro
             dispatch(addPokemon(data)) // Actualizo el estado global
             alert(`Pokemon "${data.name[0].toUpperCase() + data.name.slice(1)}" has been created successfully with ID ${data.id}`);
+            navigate('/home') // Redirijo automáticamente a home
         } catch (error) {
             try {
                 // Si hay errores de validación
@@ -84,7 +86,7 @@ export default function Form() {
                 // Si ya se creó un Pokemon igual previamente
                 else {
                     const { data } = await axios(`http://localhost:3001/pokemons/name?name=${newPokemon.name}`);
-                    alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" and same attributes has been created already`);
+                    alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" has been created already`);
                 }
             } catch (error) {
                 console.log({error});                
@@ -147,7 +149,7 @@ export default function Form() {
                 <span>{image3dValidation}</span>
             <input type="url" placeholder="Artistic image URL" value={newPokemon.imageArtistic} name="imageArtistic" onChange={handleChange}/><br />
                 <span>{imageArtisticValidation}</span>
-            <input type="submit" value="Create Pokemon"/>
+            <input type="submit" value="Create Pokemon" disabled={Object.keys(errors).length}/>
                 <span>{nameNotNull}</span>
                 <span>{hpNotNull}</span>
                 <span>{attackNotNull}</span>

@@ -23,7 +23,7 @@ module.exports = async function getPokemons(req, res) {
 
         //* POKEMONS DE LA API
         // Cantidad de Pokemons que quiero traer de la API:
-        const amountPokemonsAPI = 10;
+        const amountPokemonsAPI = 200;
         
         // Creo un array con todas las solicitudes a la API
         const apiRequests = [];

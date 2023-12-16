@@ -11,7 +11,6 @@ import Nav from './components/Nav';
 
 function App() {
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const addedPokemons = useSelector(state => state.pokemons);
@@ -28,15 +27,10 @@ function App() {
   }, [])
 
 
-  const login = () => {
-    navigate('/home')
-  }
-
-
   return <div>
     {pathname !== '/' && <Nav />}
     <Routes>
-      <Route path='/' element={<Landing login={login} />} />
+      <Route path='/' element={<Landing />} />
       <Route path='/home' element={<Cards />} />
       <Route path='/form' element={<Form />} />
       <Route path='/detail/:idPokemon' element={<Detail />} />

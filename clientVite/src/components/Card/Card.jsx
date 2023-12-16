@@ -14,7 +14,8 @@ export default function Card({pokemon}) {
     const dispatch = useDispatch();
 
     const closePokemon = () => {
-        dispatch(deletePokemon(id));
+        const confirmation = confirm(`Are you sure you want to delete Pokemon "${name[0].toUpperCase() + name.slice(1)}?"`)
+        confirmation && dispatch(deletePokemon(id));
     }
     
     const changeImage = (image) => {
@@ -23,7 +24,7 @@ export default function Card({pokemon}) {
 
     return <div className={style.div} >
         <button><Link to={`/detail/${id}`}>Details</Link></button>      
-        <button onClick={closePokemon}>Delete</button>
+        {typeof pokemon.id !== 'number' && <button onClick={closePokemon}>Delete</button>}
         <h3>Name: {name[0].toUpperCase() + name.slice(1)}</h3>
         <h3>Types: 
             <ol>
