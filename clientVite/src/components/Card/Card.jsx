@@ -23,7 +23,7 @@ export default function Card({pokemon}) {
     }
 
     return <div className={style.div} >
-        <button><Link to={`/detail/${id}`}>Details</Link></button>      
+        <Link to={`/detail/${id}`}><button>Details</button></Link>      
         {typeof pokemon.id !== 'number' && <button onClick={closePokemon}>Delete</button>}
         <h3>Name: {name[0].toUpperCase() + name.slice(1)}</h3>
         <h3>Types: 

@@ -1,4 +1,4 @@
-import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, ORIGIN_FILTER, TYPE_FILTER, NAME_ORDER, ATTACK_ORDER, SEARCH_POKEMONS } from "./actionsTypes";
+import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, FILTERS, NAME_ORDER, ATTACK_ORDER, SEARCH_POKEMONS } from "./actionsTypes";
 import axios from "axios";
 
 
@@ -59,17 +59,10 @@ export function deletePokemon(id) {
     }
 }
 
-export function typeFilter(typeName) {
+export function filters(filters) {
     return {
-        type: TYPE_FILTER,
-        payload: typeName
-    }
-}
-
-export function originFilter(origin) {
-    return {
-        type: ORIGIN_FILTER,
-        payload: origin
+        type: FILTERS,
+        payload: filters
     }
 }
 

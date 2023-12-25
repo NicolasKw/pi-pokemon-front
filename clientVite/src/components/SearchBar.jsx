@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchPokemons, getPokemons } from "../redux/actions";
+import { searchPokemons } from "../redux/actions";
 
 export default function SearchBar() {
 
