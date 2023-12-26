@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 export default function Detail() {
 
@@ -32,6 +32,7 @@ export default function Detail() {
     }
 
     return <div>
+        <button><Link to={'/home'} >Back</Link></button>
         <h3>ID: {id}</h3>
         <h3>Name: {name[0].toUpperCase() + name.slice(1)}</h3>
         <h3>HP: {hp}</h3>
