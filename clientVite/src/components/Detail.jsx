@@ -21,11 +21,10 @@ export default function Detail() {
         }
         downloadData();
     }, [idPokemon]);
-
+    
     if(!pokemon.name) {
         return <div>Loading...</div>
     }
-    
     const { id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d, imageArtistic, typesNames } = pokemon;
 
     const changeImage = (image) => {
@@ -49,8 +48,8 @@ export default function Detail() {
         <img src={!image ? imageClassic : image} alt="pokemonImage" width='200px'/>
         <h3>Image: 
             <button onClick={() => changeImage(imageClassic)}>Classic</button>
-            <button onClick={() => changeImage(image3d)}>3D</button>
-            <button onClick={() => changeImage(imageArtistic)}>Artistic</button>
+            {image3d && <button onClick={() => changeImage(image3d)}>3D</button>}
+            {imageArtistic && <button onClick={() => changeImage(imageArtistic)}>Artistic</button>}
         </h3>
     </div>
 }

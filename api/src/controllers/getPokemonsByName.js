@@ -47,13 +47,13 @@ module.exports = async function getPokemonsByName(req,res) {
                 // Si encuentra al Pokemon en la DB:
                 } else {
                     
-                    const { id, name, hp, attack, defense, speed, height, weight, types } = pokemon.dataValues
+                    const { id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d, imageArtistic } = pokemon.dataValues
 
                     // Traigo todos los types asociados a ese Pokemon
                     const typesNames = (await pokemon.getTypes()).map(elem => elem.name)
 
                     // Retorno la info del pokemon y sus types
-                    res.status(200).json({ id, name, hp, attack, defense, speed, height, weight, types, typesNames });
+                    res.status(200).json({ id, name, hp, attack, defense, speed, height, weight, typesNames, imageClassic, image3d, imageArtistic });
                 }
     
             // Si no encuentra al Pokemon en la API:

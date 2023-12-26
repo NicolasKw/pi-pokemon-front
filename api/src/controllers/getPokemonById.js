@@ -40,13 +40,14 @@ module.exports = async function getPokemonById (req,res) {
     } else {
 
         try {
-            let pokemon = await Pokemon.findByPk(idPokemon);
+            const pokemon = await Pokemon.findByPk(idPokemon);
+            const { id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d, imageArtistic } = pokemon
 
             // Traigo todos los types asociados a ese Pokemon
             const typesNames = (await pokemon.getTypes()).map(elem => elem.name)
 
             // Retorno la info del pokemon y sus types
-            res.status(200).json({ pokemon, typesNames });
+            res.status(200).json({ id, name, hp, attack, defense, speed, height, weight, typesNames, imageClassic, image3d, imageArtistic });
 
         } catch (error) {
             res.status(404).json({message: `Pokemon with ID ${idPokemon} not found`})
