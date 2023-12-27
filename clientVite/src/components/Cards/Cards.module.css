@@ -44,6 +44,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     place-items: center;
-    background-color: rgb(46, 61, 80);
-    padding-block: 0.3em;
+    background-color: rgba(19, 25, 33, 0.541);
+    padding-block: 0.2em;
 }

@@ -1,20 +1,73 @@
 .div {
     border: 1px solid black;
-    border-radius: 1em;
+    border-radius: 0.5em;
     text-align: center;
     list-style-position: inside;
     width: max-content;
     margin: 1em;
-    padding: 1em;
+    padding-inline: 1em;
     font-size: small;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.div:hover {
+    transform: scale(1.02);
+}
+
+.title {
+    background-color: rgb(19,25,33);
+    color: rgb(254,189,105);;
+    margin-inline: -0.9em;
+    margin-block: 0.5em;
+    padding-block: 0.5em;
 }
 
 .div > button {
     border: 1px solid black;
-    margin: 0.5em
 }
 
 .div > h3 > button {
     border: 1px solid black;
-    margin: 0.25em
+}
+
+.buttonsDiv {
+    position: relative;
+    bottom: 30%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+}
+
+.imageButton {
+    border-radius: 100%;
+    border: 1px solid black;
+    font-size: medium;
+    padding-inline: 0.6em;
+    padding-blocK: 0.8em;
+    line-height: 0;
+}
+
+.imageButton:not(:disabled):active {
+    border: 1px solid bltrtranack;
+    background-color: rgba(19, 25, 33, 0.479);
+
+}
+
+.imageButton:focus {
+    outline: none;
+}
+
+.imageContainer {
+    margin-bottom: -2em;
+    margin-top: 2em;
+    width: 20em;
+    height: 17em;;
+}
+
+.image {
 }
