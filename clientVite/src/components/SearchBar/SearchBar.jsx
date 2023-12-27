@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchPokemons } from "../redux/actions";
+import { searchPokemons } from "../../redux/actions";
+import style from "./SearchBar.module.css"
 
 export default function SearchBar() {
 
@@ -33,9 +34,11 @@ export default function SearchBar() {
     //     dispatch(getPokemons());
     // }
 
-    return <div>
-        <input type="text" id="searchBar" placeholder="Write the Pokemon name" autoComplete="off" onChange={handleChange} value={name} />
-        <button onClick={searchPokemon}>Search</button>
+    return <div className={style.barContainer}>
+        <input type="text" id="searchBar" placeholder="Search Pokemon by name" autoComplete="off" onChange={handleChange} value={name} className={style.bar}/>
+        <div className={style.buttonContainer}>
+            <button onClick={searchPokemon} className={style.button}><img src="https://icones.pro/wp-content/uploads/2021/06/icone-loupe-noir.png" alt="search" width='25em'/></button>
+        </div>
         {/* <button onClick={showAll}>Show all</button> */}
     </div>
 }

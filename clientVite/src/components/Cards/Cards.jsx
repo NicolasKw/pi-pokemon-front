@@ -90,48 +90,72 @@ export default function Cards() {
     }
 
     return <div>
-        {/* Filtro por type */}
-        <label htmlFor="typeFilter">Filter by type:</label>
-        <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1}>
-            {/* Creo una opción para mostrar todos */}
-            <option value="all" key='allNames'>All</option>
-            {/* Despliego todos los types que traje de la DB */}
-            {types.map(type => <option key={type.id} value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>)}
-        </select>
 
-        {/* Filtro por origen */}
-        <label htmlFor="originFilter">Filter by data origin</label>
-        <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1}>
-            <option value="all" key='allOrigins'>All</option>
-            <option value="API" key='API'>API</option>
-            <option value="DB" key='DB'>Database</option>
-        </select>
+        {/* Div con filtros */}
+        <div className={style.filtersContainer}>
 
-        {/* Orden por nombre */}
-        <label htmlFor="nameOrder">Order by Name</label>
-        <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={renderedPokemons.length <= 1}>
-            <option value="none" key='nameNone'></option>
-            <option value="A" key='nameA'>Ascendant</option>
-            <option value="D" key='nameD'>Descendant</option>
-        </select>
+            {/* Filtro por type */}
+            <div>
+                <label htmlFor="typeFilter">Type: </label>
+                <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1} className={style.select}>
+                    {/* Creo una opción para mostrar todos */}
+                    <option value="all" key='allNames'>All</option>
+                    {/* Despliego todos los types que traje de la DB */}
+                    {types.map(type => <option key={type.id} value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>)}
+                </select>
+            </div>
 
-        {/* Orden por ataque */}
-        <label htmlFor="attackOrder">Order by Attack</label>
-        <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={renderedPokemons.length <= 1}>
-            <option value="none" key='attackNone'></option>
-            <option value="A" key='attackA'>Ascendant</option>
-            <option value="D" key='attackD'>Descendant</option>
-        </select>
+            {/* Filtro por origen */}
+            <div>
+                <label htmlFor="originFilter">Origin: </label>
+                <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1} className={style.select}>
+                    <option value="all" key='allOrigins'>All</option>
+                    <option value="API" key='API'>API</option>
+                    <option value="DB" key='DB'>Database</option>
+                </select>
+            </div>
 
-        {/* Hacen lo mismo, pero lo separo por un tema de UX. Pensar si es lo mejor */}
-        <button onClick={handleCleanFilters} disabled={renderedPokemons.length <= 1}>Clean filters</button>
-        <br />
-        <button onClick={handleCleanFilters} disabled={renderedPokemons.length > 1} >Show all</button>
+            {/* Orden por nombre */}
+            <div>
+                <label htmlFor="nameOrder">Order by Name: </label>
+                <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={renderedPokemons.length <= 1} className={style.select}>
+                    <option value="none" key='nameNone'></option>
+                    <option value="A" key='nameA'>Ascendant</option>
+                    <option value="D" key='nameD'>Descendant</option>
+                </select>
+            </div>
+
+
+            {/* Orden por ataque */}
+            <div>
+                <label htmlFor="attackOrder">Order by Attack: </label>
+                <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={renderedPokemons.length <= 1} className={style.select}>
+                    <option value="none" key='attackNone'></option>
+                    <option value="A" key='attackA'>Ascendant</option>
+                    <option value="D" key='attackD'>Descendant</option>
+                </select>
+            </div>
+
+            {/* Botón para resetear filtros */}
+            <div>
+                <button onClick={handleCleanFilters} disabled={renderedPokemons.length <= 1} className={style.button}>Clean filters</button>
+            </div>
+
+        </div>
 
         {/* Control de paginado */}
-        <button value='back' onClick={handleChangePage} disabled={currentPage === 1} >{'<'}</button>
-        <button>{currentPage}</button>
-        <button value='next' onClick={handleChangePage} disabled={!nextRenderedPokemon.length} >{'>'}</button>
+        <div className={style.paginado}>
+            {/* Botón para mostrar todos después de buscar */}
+            <div>
+                <button onClick={handleCleanFilters} disabled={renderedPokemons.length > 1} className={style.button}>Show all</button>
+            </div>
+            {/* Paginado */}
+            <div>
+                <button value='back' onClick={handleChangePage} disabled={currentPage === 1} className={style.button}>{'<'}</button>
+                <button className={style.button}>{currentPage}</button>
+                <button value='next' onClick={handleChangePage} disabled={!nextRenderedPokemon.length} className={style.button}>{'>'}</button>
+            </div>
+        </div>
 
         {/* Loading message */}
         {renderedPokemons.length === 0 && <h2>Loading...</h2>}

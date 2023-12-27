@@ -1,19 +1,16 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Landing from './components/Landing';
+import Landing from './components/Landing/Landing';
 import Cards from './components/Cards/Cards';
 import Form from './components/Form';
 import Detail from './components/Detail';
-import Nav from './components/Nav';
-
+import Nav from './components/Nav/Nav';
+import style from './App.module.css'
 
 function App() {
 
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const addedPokemons = useSelector(state => state.pokemons);
 
   useEffect(() => {
     const downloadTypes = async () => {
@@ -27,7 +24,7 @@ function App() {
   }, [])
 
 
-  return <div>
+  return <div className={style.div}>
     {pathname !== '/' && <Nav />}
     <Routes>
       <Route path='/' element={<Landing />} />
