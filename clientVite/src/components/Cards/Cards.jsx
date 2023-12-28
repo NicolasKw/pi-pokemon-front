@@ -97,7 +97,7 @@ export default function Cards() {
             {/* Filtro por type */}
             <div>
                 <label htmlFor="typeFilter">Type: </label>
-                <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1} className={style.select}>
+                <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={searchAux} className={style.select}>
                     {/* Creo una opción para mostrar todos */}
                     <option value="all" key='allNames'>All</option>
                     {/* Despliego todos los types que traje de la DB */}
@@ -108,7 +108,7 @@ export default function Cards() {
             {/* Filtro por origen */}
             <div>
                 <label htmlFor="originFilter">Origin: </label>
-                <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={renderedPokemons.length <= 1} className={style.select}>
+                <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={searchAux} className={style.select}>
                     <option value="all" key='allOrigins'>All</option>
                     <option value="API" key='API'>API</option>
                     <option value="DB" key='DB'>Database</option>
@@ -118,7 +118,7 @@ export default function Cards() {
             {/* Orden por nombre */}
             <div>
                 <label htmlFor="nameOrder">Order by Name: </label>
-                <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={renderedPokemons.length <= 1} className={style.select}>
+                <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={searchAux} className={style.select}>
                     <option value="none" key='nameNone'></option>
                     <option value="A" key='nameA'>Ascendant</option>
                     <option value="D" key='nameD'>Descendant</option>
@@ -129,7 +129,7 @@ export default function Cards() {
             {/* Orden por ataque */}
             <div>
                 <label htmlFor="attackOrder">Order by Attack: </label>
-                <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={renderedPokemons.length <= 1} className={style.select}>
+                <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={searchAux} className={style.select}>
                     <option value="none" key='attackNone'></option>
                     <option value="A" key='attackA'>Ascendant</option>
                     <option value="D" key='attackD'>Descendant</option>
@@ -138,7 +138,7 @@ export default function Cards() {
 
             {/* Botón para resetear filtros */}
             <div>
-                <button onClick={handleCleanFilters} disabled={renderedPokemons.length <= 1} className={style.button}>Clean filters</button>
+                <button onClick={handleCleanFilters} disabled={filter.typeFilter === 'all' && filter.originFilter === 'all'} className={style.button}>Clean filters</button>
             </div>
 
         </div>
@@ -158,7 +158,7 @@ export default function Cards() {
         </div>
 
         {/* Loading message */}
-        {renderedPokemons.length === 0 && <h2>Loading...</h2>}
+        {renderedPokemons.length === 0 && <h2><img src="https://p-okedex.vercel.app/static/media/pokeball.2affaaf5.gif" alt="loading" className={style.loading}/></h2>}
 
         {/* Renderizado de Cards */}
         <div className={style.cards} >

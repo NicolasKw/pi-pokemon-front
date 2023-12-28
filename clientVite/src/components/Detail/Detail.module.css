@@ -1,0 +1,109 @@
+.div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 7em;
+    margin-left: 5em;
+    margin-top: -2.2em;
+}
+
+.imageContainer {
+    text-align: center;
+    border: 1px solid rgb(19,25,33);
+    border-radius: 0.5em;
+    padding-inline: 2em;
+    background-color: white;
+    margin-bottom: 5em;
+}
+
+.textContainer {
+    border: 1px solid rgb(19,25,33);
+    border-radius: 0.5em;
+    padding-inline: 15em;
+    padding-bottom: 0.5em;
+    background-color: white;
+    text-align: center;
+}
+
+.h2 {
+    background-color: rgb(19,25,33);
+    color: rgb(254,189,105);
+    margin-inline: -10em;
+    padding-block: 0.3em;
+    margin-block: 0.6em;
+    text-align: center;
+    font-size: x-large;
+}
+
+.h3 {
+    background-color: rgba(19, 25, 33, 0.295);
+    margin-inline: -13.7em;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-block: 0.2em;
+    padding-block: 0.2em;
+    font-size: 1.1em;
+}
+
+.h4 {
+    font-weight: normal;
+    margin-block: 0;
+}
+
+.image {
+    position: relative;
+    top: 1em
+}
+
+.buttonsDiv {
+    position: relative;
+    bottom: 9em;
+    display: flex;
+    justify-content: space-between;
+    width: 25em;
+}
+
+.imageButton {
+    border-radius: 100%;
+    border: 1px solid rgb(19,25,33);
+    font-size: medium;
+    padding-inline: 0.5em;
+    padding-blocK: 0.8em;
+    line-height: 0;
+}
+
+.imageButton:not(:disabled):active {
+    border: 1px solid rgb(19,25,33);
+    background-color: rgba(19, 25, 33, 0.479);
+}
+
+.imageButton:focus {
+    outline: none;
+}
+
+.backButton {
+    border: 1px solid rgb(19,25,33);
+    border-radius: 0.5em;
+    color: rgb(19,25,33);
+    font-weight: normal;
+    background-color: rgba(19, 25, 33, 0.082);
+    margin-inline: 7.3em;
+    margin-top: 1em;
+}
+
+.backButton:hover {
+    transform: scale(1.03);
+}
+
+.backButton:focus {
+    outline: none;
+
+}
+
+.loading {
+    position: relative;
+    left: 50%;
+    top: 15em;
+    transform: translate(-50%, -50%);
+}

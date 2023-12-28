@@ -4,7 +4,7 @@ import axios from 'axios';
 import Landing from './components/Landing/Landing';
 import Cards from './components/Cards/Cards';
 import Form from './components/Form';
-import Detail from './components/Detail';
+import Detail from './components/Detail/Detail';
 import Nav from './components/Nav/Nav';
 import style from './App.module.css'
 

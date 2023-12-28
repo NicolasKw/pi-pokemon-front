@@ -1,15 +1,14 @@
 .div {
-    border: 1px solid black;
+    border: 1px solid rgb(19,25,33);
     border-radius: 0.5em;
     text-align: center;
-    list-style-position: inside;
-    width: max-content;
+    width: 20em;
     margin: 1em;
     padding-inline: 1em;
     font-size: small;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: white;
 }
@@ -20,18 +19,18 @@
 
 .title {
     background-color: rgb(19,25,33);
-    color: rgb(254,189,105);;
+    color: rgb(254,189,105);
+    margin-inline: -9.4em;
+    padding-block: 1em;
+}
+
+.types {
+    background-color: rgba(19, 25, 33, 0.541);
+    color: white;
+    font-weight: normal;
     margin-inline: -0.9em;
-    margin-block: 0.5em;
-    padding-block: 0.5em;
-}
-
-.div > button {
-    border: 1px solid black;
-}
-
-.div > h3 > button {
-    border: 1px solid black;
+    padding-block: 1em;
+    margin-top: 0;
 }
 
 .buttonsDiv {
@@ -45,17 +44,17 @@
 
 .imageButton {
     border-radius: 100%;
-    border: 1px solid black;
+    border: 1px solid rgb(19,25,33);
     font-size: medium;
-    padding-inline: 0.6em;
+    padding-inline: 0.5em;
     padding-blocK: 0.8em;
     line-height: 0;
+    margin-top: -1em;
 }
 
 .imageButton:not(:disabled):active {
-    border: 1px solid bltrtranack;
+    border: 1px solid rgb(19,25,33);
     background-color: rgba(19, 25, 33, 0.479);
-
 }
 
 .imageButton:focus {
@@ -66,8 +65,27 @@
     margin-bottom: -2em;
     margin-top: 2em;
     width: 20em;
-    height: 17em;;
+    height: 17em;
 }
 
 .image {
+    border-radius: 0.5em;
+}
+
+.deleteButton {
+    position: relative;
+    left: 9em;
+    bottom: 3.4em;
+    border-radius: 100%;
+    border: 1px solid rgb(19,25,33);
+    background-color: white;
+    padding-inline: 0.3em;
+    padding-top: 0.2em;
+    padding-bottom: 0em;
+    margin-bottom: -1.7em;
+}
+
+.deleteButton:hover {
+    transform: scale(1.1);
+    background-color: rgb(255, 255, 201)
 }
