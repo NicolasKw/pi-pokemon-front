@@ -59,10 +59,10 @@
     width: fit-content;
 }
 
-.submitButton:hover {
+.submitButton:not(:disabled)hover {
     background-color: rgba(254, 189, 105);
 }
-.submitButton:active {
+.submitButton:not(:disabled):active {
     transform: scale(1.01);
 }
 

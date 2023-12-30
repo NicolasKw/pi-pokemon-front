@@ -7,23 +7,23 @@ import style from "./Cards.module.css"
 
 export default function Cards() {
 
+    // Estados locales
     const [aux, setAux] = useState(false); // Necesario para que se vuelva a renderizar el componente cuando hago un ordenamiento
-
     const pokemonsPerPage = 12;
     const [currentPage, setCurrentPage] = useState(1)
     const [minRenderedPokemon, setMinRenderedPokemon] = useState(0);
     const [maxRenderedPokemon, setMaxRenderedPokemon] = useState(pokemonsPerPage);
     const [pokemonsLoadingComplete, setPokemonsLoadingComplete] = useState(true);
-
-    const renderedPokemons = useSelector(state => state.pokemons).slice(minRenderedPokemon, maxRenderedPokemon);
-    const nextRenderedPokemon = useSelector(state => state.pokemons).slice(maxRenderedPokemon);
-    const types = useSelector(state => state.types);
-    const searchAux = useSelector(state => state.searchAux);
-
     const [filter, setFilter] = useState({
         typeFilter: 'all',
         originFilter: 'all'
     });
+
+    // Estados globales
+    const renderedPokemons = useSelector(state => state.pokemons).slice(minRenderedPokemon, maxRenderedPokemon);
+    const nextRenderedPokemon = useSelector(state => state.pokemons).slice(maxRenderedPokemon);
+    const types = useSelector(state => state.types);
+    const searchAux = useSelector(state => state.searchAux);
 
     const dispatch = useDispatch();
 
@@ -63,11 +63,13 @@ export default function Cards() {
             dispatch(nameOrder(event.target.value));
             aux ? setAux(false) : setAux(true);
         }
+        document.getElementById('attackOrder').value = '';
     }
 
     function handleAttackOrder(event) {
         dispatch(attackOrder(event.target.value));
         aux ? setAux(false) : setAux(true);
+        document.getElementById('nameOrder').value = '';
     }
 
     function handleCleanFilters(event) {
@@ -86,11 +88,11 @@ export default function Cards() {
         if(event.target.value === 'next') {
             setMinRenderedPokemon(minRenderedPokemon + pokemonsPerPage);
             setMaxRenderedPokemon(maxRenderedPokemon + pokemonsPerPage);
-            setCurrentPage(currentPage + 1)
+            setCurrentPage(currentPage + 1);
         } else {
             setMinRenderedPokemon(minRenderedPokemon - pokemonsPerPage);
             setMaxRenderedPokemon(maxRenderedPokemon - pokemonsPerPage);
-            setCurrentPage(currentPage - 1)
+            setCurrentPage(currentPage - 1);
         }
     }
 
@@ -163,7 +165,10 @@ export default function Cards() {
         </div>
 
         {/* Loading message */}
-        {renderedPokemons.length === 0 && <h2><img src="https://p-okedex.vercel.app/static/media/pokeball.2affaaf5.gif" alt="loading" className={style.loading}/></h2>}
+        {(renderedPokemons.length === 0 && filter.typeFilter === 'all' && filter.originFilter === 'all') && <img src="https://p-okedex.vercel.app/static/media/pokeball.2affaaf5.gif" alt="loading" className={style.loading}/>}
+
+        {/* Nothing to show message */}
+        {(renderedPokemons.length === 0 && (filter.typeFilter !== 'all' || filter.originFilter !== 'all')) && <h2 className={style.empty}>Oops, looks like there's nothing here<br /><img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDlxbm1sbHgyc2NzdGpua3IybmVrazVjbDhpZm96aGNuazIzOGM5aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/PhZ4hE8XVEoOkWA4db/giphy.gif" alt="empty" width='300em'/></h2> }
 
         {/* Renderizado de Cards */}
         <div className={style.cards} >

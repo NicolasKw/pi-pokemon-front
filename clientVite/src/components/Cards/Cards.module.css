@@ -4,6 +4,7 @@
     justify-content: space-around;
     margin-inline: 1em;
     margin-top: 1em;
+    margin-bottom: 0.8em;
 }
 
 .filtersContainer {
@@ -63,6 +64,15 @@
 .loading {
     position: relative;
     left: 50%;
+    top: 15em;
+    transform: translate(-50%, -50%);
+}
+
+.empty {
+    position: relative;
+    left: 50%;
     top: 9em;
     transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 5;
 }

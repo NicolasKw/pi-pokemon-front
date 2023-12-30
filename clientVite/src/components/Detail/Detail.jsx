@@ -51,6 +51,7 @@ export default function Detail() {
 
     return <div>
 
+        {/* Back button */}
         <Link to={'/home'}><button className={style.backButton}>← Back</button></Link>
 
         <div className={style.div}>
