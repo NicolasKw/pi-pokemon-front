@@ -11,6 +11,8 @@ export default function Detail() {
 
     const [image, setImage] = useState('');
 
+    const noImage = 'https://vignette.wikia.nocookie.net/hanabira/images/6/60/No_Image_Available.png/revision/latest?cb=20180619160503'
+
     useEffect(() => {
         const downloadData = async() => {
             try {
@@ -57,11 +59,11 @@ export default function Detail() {
         <div className={style.div}>
             {/* Imágenes */}
             <div className={style.imageContainer}>
-                <img src={!image ? imageClassic : image} alt="pokemonImage" width='300em' height='300em' className={style.image}/>
+                <img src={!image ? (imageClassic || image3d || imageArtistic || noImage) : image} alt="pokemonImage" width='300em' height='300em' className={style.image}/>
                 {/* Botones para cambiar de imagen */}
                 <div className={style.buttonsDiv}>
-                    <button onClick={changeImage} value='<' disabled={!image3d && !imageArtistic} className={style.imageButton}>{'<'}</button>
-                    <button onClick={changeImage} value='>' disabled={!image3d && !imageArtistic} className={style.imageButton}>{'>'}</button>
+                    <button onClick={changeImage} value='<' disabled={(!imageClassic && !image3d) || (!imageClassic && !imageArtistic) || (!image3d && !imageArtistic)} className={style.imageButton}>{'<'}</button>
+                    <button onClick={changeImage} value='>' disabled={(!imageClassic && !image3d) || (!imageClassic && !imageArtistic) || (!image3d && !imageArtistic)} className={style.imageButton}>{'>'}</button>
                 </div>
             </div>
 

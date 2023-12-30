@@ -13,13 +13,18 @@ export default function Card({pokemon}) {
     const dispatch = useDispatch();
 
     const closePokemon = () => {
-        const confirmation = confirm(`Are you sure you want to delete Pokemon "${name[0].toUpperCase() + name.slice(1)}?"`)
+        const confirmation = confirm(`Are you sure you want to delete Pokemon "${name[0].toUpperCase() + name.slice(1)}"?`)
         confirmation && dispatch(deletePokemon(id));
     }
+
+    const noImage = 'https://vignette.wikia.nocookie.net/hanabira/images/6/60/No_Image_Available.png/revision/latest?cb=20180619160503'
+    
     
     const changeImage = (event) => {
         
-        const imagesArray = [imageClassic];
+        const imagesArray = [];
+
+        imageClassic && imagesArray.push(imageClassic)
         image3d && imagesArray.push(image3d);
         imageArtistic && imagesArray.push(imageArtistic);
         
@@ -50,14 +55,14 @@ export default function Card({pokemon}) {
                 {typesNames.map(type => type[0].toUpperCase() + type.slice(1)).join(', ')}
             </h3>
             <div className={style.imageContainer}>
-                <img src={!image ? imageClassic : image} alt="pokemonImage" width='180px' height='180px' className={style.image}/>
+                <img src={!image ? (imageClassic || image3d || imageArtistic || noImage) : image} alt="pokemonImage" width='180px' height='180px' className={style.image}/>
             </div>
         </Link>   
         
         {/* Botones para cambiar de imagen */}
         <div className={style.buttonsDiv}>
-            <button onClick={changeImage} value='<' disabled={!image3d && !imageArtistic} className={style.imageButton}>{'<'}</button>
-            <button onClick={changeImage} value='>' disabled={!image3d && !imageArtistic} className={style.imageButton}>{'>'}</button>
+            <button onClick={changeImage} value='<' disabled={(!imageClassic && !image3d) || (!imageClassic && !imageArtistic) || (!image3d && !imageArtistic)} className={style.imageButton}>{'<'}</button>
+            <button onClick={changeImage} value='>' disabled={(!imageClassic && !image3d) || (!imageClassic && !imageArtistic) || (!image3d && !imageArtistic)} className={style.imageButton}>{'>'}</button>
         </div>
         
     </div>

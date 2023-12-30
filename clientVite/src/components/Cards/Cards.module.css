@@ -68,6 +68,11 @@
     transform: translate(-50%, -50%);
 }
 
+.loadingFilters {
+    position: relative;
+    top: 0.1em;
+}
+
 .empty {
     position: relative;
     left: 50%;

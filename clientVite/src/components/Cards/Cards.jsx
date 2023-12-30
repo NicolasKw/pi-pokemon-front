@@ -20,13 +20,17 @@ export default function Cards() {
     });
 
     // Estados globales
-    const renderedPokemons = useSelector(state => state.pokemons).slice(minRenderedPokemon, maxRenderedPokemon);
+    const allPokemons = useSelector(state => state.pokemons);
+    const renderedPokemons = allPokemons.slice(minRenderedPokemon, maxRenderedPokemon);
     const nextRenderedPokemon = useSelector(state => state.pokemons).slice(maxRenderedPokemon);
     const types = useSelector(state => state.types);
     const searchAux = useSelector(state => state.searchAux);
 
     const dispatch = useDispatch();
-
+    
+    // Variable auxiliar para habilitar los filtros, que utilizo en el useEffect
+    let loadNum = 0;
+    
     useEffect(() => {
         // Si estoy en una página distinta a la primera y busco un Pokemon:
         if(searchAux) {
@@ -38,10 +42,15 @@ export default function Cards() {
         if((!renderedPokemons.length || !types.length) && (filter.typeFilter === 'all' && filter.originFilter === 'all')) {
             setPokemonsLoadingComplete(false);
             dispatch(getTypes());
-            dispatch(getPokemons());
-            setTimeout(() => {
-                setPokemonsLoadingComplete(true)
-            }, 5000); // Le doy 5 segundos para que terminen de cargar los Pokemons, y ahí habilito los filtros
+            const downloadedPokemons = dispatch(getPokemons());
+            // Habilito los filtros una vez que cargaron los Pokemons
+            downloadedPokemons.then(() => {
+                // Este bloque de código se ejecuta 2 veces:
+                // 1) Cuando se resuelve la promesa donwloadedPokemons
+                // 2) Cuando terminan de cargarse todos los Pokemons -> Acá quiero que se habiliten los filtros
+                loadNum ++; 
+                loadNum === 2 && setPokemonsLoadingComplete(true);
+            })
         }
         dispatch(filters(filter));
     }, [filter, searchAux])
@@ -81,7 +90,9 @@ export default function Cards() {
         setCurrentPage(1);
         setMinRenderedPokemon(0);
         setMaxRenderedPokemon(pokemonsPerPage);
-        dispatch(getPokemons());
+        if(event.target.value === 'showAll') {
+            dispatch(getPokemons());
+        }
     }
 
     function handleChangePage(event) {
@@ -89,17 +100,25 @@ export default function Cards() {
             setMinRenderedPokemon(minRenderedPokemon + pokemonsPerPage);
             setMaxRenderedPokemon(maxRenderedPokemon + pokemonsPerPage);
             setCurrentPage(currentPage + 1);
-        } else {
+        } else if (event.target.value === 'back') {
             setMinRenderedPokemon(minRenderedPokemon - pokemonsPerPage);
             setMaxRenderedPokemon(maxRenderedPokemon - pokemonsPerPage);
             setCurrentPage(currentPage - 1);
+        } else {
+            setCurrentPage(1);
+            setMinRenderedPokemon(0);
+            setMaxRenderedPokemon(pokemonsPerPage);
         }
     }
+
 
     return <div>
 
         {/* Div con filtros */}
         <div className={style.filtersContainer}>
+
+            {/* Hasta que se habilitan los filtros */}
+            {(!pokemonsLoadingComplete) && <img src="https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif" alt="loading" width='25em' className={style.loadingFilters}/> }
 
             {/* Filtro por type */}
             <div>
@@ -153,15 +172,15 @@ export default function Cards() {
         {/* Control de paginado */}
         <div className={style.paginado}>
             {/* Botón para mostrar todos después de buscar */}
-            <div>
-                <button onClick={handleCleanFilters} disabled={renderedPokemons.length > 1} className={style.button}>Show all</button>
-            </div>
+            <button value='showAll' onClick={handleCleanFilters} disabled={renderedPokemons.length > 1} className={style.button}>Show all</button>
             {/* Paginado */}
             <div>
                 <button value='back' onClick={handleChangePage} disabled={currentPage === 1} className={style.button}>{'<'}</button>
                 <button className={style.button}>{currentPage}</button>
                 <button value='next' onClick={handleChangePage} disabled={!nextRenderedPokemon.length} className={style.button}>{'>'}</button>
             </div>
+            {/* Botón para volver a la página inicial */}
+            <button value='first' onClick={handleChangePage} disabled={currentPage === 1} className={style.button}>Go to Page 1</button>
         </div>
 
         {/* Loading message */}

@@ -23,13 +23,18 @@ module.exports = async function getPokemons(req, res) {
 
         //* POKEMONS DE LA API
         // Cantidad de Pokemons que quiero traer de la API:
-        const amountPokemonsAPI = 200;
+        const lastIdToBreak = 1025;;
+        const firstIdFromBreak = 10001;
+        const lastId = 10277;
         
         // Creo un array con todas las solicitudes a la API
         const apiRequests = [];
-        for (let i = 1 ; i <= amountPokemonsAPI ; i++) {
+        for (let i = 1 ; i <= lastIdToBreak ; i++) {
             apiRequests.push(axios(`${URL_BASE}${i}/`));
-        }
+        };
+        for (let i = firstIdFromBreak ; i <= lastId ; i++) {
+            apiRequests.push(axios(`${URL_BASE}${i}/`));
+        };
         
         // Hago las solicitudes con Promise.all
         const apiResponses = await Promise.all(apiRequests)
