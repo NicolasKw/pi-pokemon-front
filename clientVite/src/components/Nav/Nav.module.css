@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(19,25,33)
+    background-color: rgb(19,25,33);
 }
 
 .button {
@@ -20,9 +20,9 @@
 }
 
 .button:hover {
-    border: 1px solid black;
+    border: 1px solid rgb(19,25,33);
     background-color: rgb(254,189,105);
-    color: black;
+    color: rgb(19,25,33);
 }
 
 .logoPokemon {

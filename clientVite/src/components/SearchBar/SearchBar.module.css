@@ -4,7 +4,7 @@
   }
   
   .bar {
-    border: 1px solid black;
+    border: 1px solid rgb(19,25,33);
     border-radius: 0.5em;
     padding-block: 0.5em;
     padding-inline: 1em;
@@ -30,8 +30,8 @@
     line-height: 0;
   }
 
-  .button:hover {
+  .button:not(:disabled):hover {
     background-color: rgb(254,189,105);
-    border: 1px solid black;
+    border: 1px solid rgb(19,25,33);
   }
   

@@ -3,9 +3,9 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    margin-right: 7em;
-    margin-left: 5em;
-    margin-top: -2.2em;
+    margin-right: 9em;
+    margin-left: 6em;
+    margin-top: -1em;
 }
 
 .imageContainer {
@@ -14,41 +14,44 @@
     border-radius: 0.5em;
     padding-inline: 2em;
     background-color: white;
-    margin-bottom: 5em;
+    margin-bottom: 3em;
 }
 
 .textContainer {
     border: 1px solid rgb(19,25,33);
     border-radius: 0.5em;
-    padding-inline: 15em;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.3em;
     background-color: white;
+    width: 25em;
     text-align: center;
 }
 
 .h2 {
     background-color: rgb(19,25,33);
     color: rgb(254,189,105);
-    margin-inline: -10em;
     padding-block: 0.3em;
-    margin-block: 0.6em;
+    margin-block: 0.5em;
     text-align: center;
     font-size: x-large;
 }
 
 .h3 {
     background-color: rgba(19, 25, 33, 0.295);
-    margin-inline: -13.7em;
     font-weight: bold;
     line-height: 1.1;
     margin-block: 0.2em;
     padding-block: 0.2em;
     font-size: 1.1em;
+    text-align: center;
+    
 }
 
 .h4 {
     font-weight: normal;
     margin-block: 0;
+    line-height: 1.1;
+    text-align: center;
+    width: 25em;
 }
 
 .image {
@@ -88,8 +91,10 @@
     color: rgb(19,25,33);
     font-weight: normal;
     background-color: rgba(19, 25, 33, 0.082);
-    margin-inline: 7.3em;
+    margin-inline: 1em;
     margin-top: 1em;
+    padding-block: 0.25em;
+    padding-inline: 0.4em;
 }
 
 .backButton:hover {

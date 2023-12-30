@@ -21,7 +21,7 @@
     background-color: rgb(19,25,33);
     color: rgb(254,189,105);
     margin-inline: -9.4em;
-    padding-block: 1em;
+    padding-block: 0.5em;
 }
 
 .types {
@@ -29,7 +29,7 @@
     color: white;
     font-weight: normal;
     margin-inline: -0.9em;
-    padding-block: 1em;
+    padding-block: 0.5em;
     margin-top: 0;
 }
 

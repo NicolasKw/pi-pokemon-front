@@ -13,11 +13,12 @@ export default function Cards() {
     const [currentPage, setCurrentPage] = useState(1)
     const [minRenderedPokemon, setMinRenderedPokemon] = useState(0);
     const [maxRenderedPokemon, setMaxRenderedPokemon] = useState(pokemonsPerPage);
+    const [pokemonsLoadingComplete, setPokemonsLoadingComplete] = useState(true);
 
     const renderedPokemons = useSelector(state => state.pokemons).slice(minRenderedPokemon, maxRenderedPokemon);
     const nextRenderedPokemon = useSelector(state => state.pokemons).slice(maxRenderedPokemon);
     const types = useSelector(state => state.types);
-    const searchAux = useSelector(state => state.searchAux)
+    const searchAux = useSelector(state => state.searchAux);
 
     const [filter, setFilter] = useState({
         typeFilter: 'all',
@@ -35,8 +36,12 @@ export default function Cards() {
         }
         // Si no hay Pokemons o filtros cargados y ningún filtro aplicado
         if((!renderedPokemons.length || !types.length) && (filter.typeFilter === 'all' && filter.originFilter === 'all')) {
+            setPokemonsLoadingComplete(false);
             dispatch(getTypes());
             dispatch(getPokemons());
+            setTimeout(() => {
+                setPokemonsLoadingComplete(true)
+            }, 5000); // Le doy 5 segundos para que terminen de cargar los Pokemons, y ahí habilito los filtros
         }
         dispatch(filters(filter));
     }, [filter, searchAux])
@@ -97,7 +102,7 @@ export default function Cards() {
             {/* Filtro por type */}
             <div>
                 <label htmlFor="typeFilter">Type: </label>
-                <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={searchAux} className={style.select}>
+                <select name="typeFilter" id="typeFilter" onChange={handleFilters} disabled={searchAux || !pokemonsLoadingComplete} className={style.select}>
                     {/* Creo una opción para mostrar todos */}
                     <option value="all" key='allNames'>All</option>
                     {/* Despliego todos los types que traje de la DB */}
@@ -108,7 +113,7 @@ export default function Cards() {
             {/* Filtro por origen */}
             <div>
                 <label htmlFor="originFilter">Origin: </label>
-                <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={searchAux} className={style.select}>
+                <select name="originFilter" id="originFilter" onChange={handleFilters} disabled={searchAux || !pokemonsLoadingComplete} className={style.select}>
                     <option value="all" key='allOrigins'>All</option>
                     <option value="API" key='API'>API</option>
                     <option value="DB" key='DB'>Database</option>
@@ -118,7 +123,7 @@ export default function Cards() {
             {/* Orden por nombre */}
             <div>
                 <label htmlFor="nameOrder">Order by Name: </label>
-                <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={searchAux} className={style.select}>
+                <select name="nameOrder" id="nameOrder" onChange={handleNameOrder} disabled={searchAux || !pokemonsLoadingComplete} className={style.select}>
                     <option value="none" key='nameNone'></option>
                     <option value="A" key='nameA'>Ascendant</option>
                     <option value="D" key='nameD'>Descendant</option>
@@ -129,7 +134,7 @@ export default function Cards() {
             {/* Orden por ataque */}
             <div>
                 <label htmlFor="attackOrder">Order by Attack: </label>
-                <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={searchAux} className={style.select}>
+                <select name="attackOrder" id="attackOrder" onChange={handleAttackOrder} disabled={searchAux || !pokemonsLoadingComplete} className={style.select}>
                     <option value="none" key='attackNone'></option>
                     <option value="A" key='attackA'>Ascendant</option>
                     <option value="D" key='attackD'>Descendant</option>

@@ -1,12 +1,11 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Landing from './components/Landing/Landing';
 import Cards from './components/Cards/Cards';
-import Form from './components/Form';
+import Form from './components/Form/Form';
 import Detail from './components/Detail/Detail';
 import Nav from './components/Nav/Nav';
-import style from './App.module.css'
 
 function App() {
 
@@ -24,7 +23,7 @@ function App() {
   }, [])
 
 
-  return <div className={style.div}>
+  return <div>
     {pathname !== '/' && <Nav />}
     <Routes>
       <Route path='/' element={<Landing />} />

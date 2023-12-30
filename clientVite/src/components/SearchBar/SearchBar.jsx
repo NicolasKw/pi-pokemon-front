@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchPokemons } from "../../redux/actions";
+import { useLocation } from "react-router";
 import style from "./SearchBar.module.css"
 
 export default function SearchBar() {
@@ -9,6 +10,8 @@ export default function SearchBar() {
     const [name, setName] = useState('');
 
     const dispatch = useDispatch();
+
+    const { pathname } = useLocation();
 
     const handleChange = (event) => {
         setName(event.target.value);
@@ -35,9 +38,9 @@ export default function SearchBar() {
     // }
 
     return <div className={style.barContainer}>
-        <input type="text" id="searchBar" placeholder="Search Pokemon by name" autoComplete="off" onChange={handleChange} value={name} className={style.bar}/>
+        <input type="text" id="searchBar" placeholder="Search Pokemon by name" autoComplete="off" disabled={pathname === '/form'} onChange={handleChange} value={name} className={style.bar}/>
         <div className={style.buttonContainer}>
-            <button onClick={searchPokemon} className={style.button}><img src="https://icones.pro/wp-content/uploads/2021/06/icone-loupe-noir.png" alt="search" width='25em'/></button>
+            <button onClick={searchPokemon} disabled={pathname === '/form'} className={style.button}><img src="https://icones.pro/wp-content/uploads/2021/06/icone-loupe-noir.png" alt="search" width='25em'/></button>
         </div>
         {/* <button onClick={showAll}>Show all</button> */}
     </div>

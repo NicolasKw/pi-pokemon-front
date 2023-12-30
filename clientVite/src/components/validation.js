@@ -42,7 +42,7 @@ export default function validation({name, hp, attack, defense, speed, height, we
         const elem = images[key];
         if(elem && !esURL(elem)) errors[`${key}Validation`] = "Must be a URL"
     }
-    if(!imageClassic) errors.imageClassicNotNull = "Classic image can't be empty"
+    if(!imageClassic) errors.imageClassicNotNull = "Main image can't be empty"
 
     return errors;
 }

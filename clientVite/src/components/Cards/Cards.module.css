@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-inline: 1em;
+    margin-top: 1em;
 }
 
 .filtersContainer {
