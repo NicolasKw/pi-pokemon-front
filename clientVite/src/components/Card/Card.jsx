@@ -12,14 +12,16 @@ export default function Card({pokemon}) {
     
     const dispatch = useDispatch();
 
+    // Para los Pokemons de la DB
     const closePokemon = () => {
         const confirmation = confirm(`Are you sure you want to delete Pokemon "${name[0].toUpperCase() + name.slice(1)}"?`)
         confirmation && dispatch(deletePokemon(id));
     }
 
+    // Imagen de 'No Image Available'
     const noImage = 'https://vignette.wikia.nocookie.net/hanabira/images/6/60/No_Image_Available.png/revision/latest?cb=20180619160503'
     
-    
+    // Carrousel de imágenes
     const changeImage = (event) => {
         
         const imagesArray = [];

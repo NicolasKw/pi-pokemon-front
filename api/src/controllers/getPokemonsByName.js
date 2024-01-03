@@ -4,6 +4,8 @@ const { Pokemon, Types } = require('../db');
 const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 
 module.exports = async function getPokemonsByName(req,res) {
+
+    // Obtengo el nombre por query y lo paso a minúsculas
     const nameToFind = req.query.name.toLowerCase();
 
     // Si no se pasa ningún nombre por query

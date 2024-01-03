@@ -4,9 +4,11 @@ const { Pokemon } = require('../db');
 const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/';
 
 module.exports = async function getPokemonById (req,res) {
+
+    // Obtengo el id por params
     const { idPokemon } = req.params;
 
-    //* Si el id tiene una longitud menor a 5, busco al Pokemons en la API
+    //* Si el id tiene una longitud menor a 10, busco al Pokemons en la API
     if(idPokemon.length < 10) {
 
         try {

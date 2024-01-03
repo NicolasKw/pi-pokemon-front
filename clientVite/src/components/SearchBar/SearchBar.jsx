@@ -18,27 +18,25 @@ export default function SearchBar() {
     }
     
     const searchPokemon = async () => {
-        // Si no introduce ningún nombre
+        // Si no introduce ningún nombre:
         if(!name) return alert('Please write a valid Pokemon name');
 
-        //! Se podría mejorar? Para no hacer 2 llamados al servidor (uno acá y uno en actions.js)
+        // Si introduce un nombre:
         try {
-            dispatch(searchPokemons(name)); //! Pongo el dispatch primero para que tarde menos en cargar la búsqueda
-            await axios(`http://localhost:3001/pokemons/name?name=${name}`) //! Si no encuentra el Pokemon va al catch
+            dispatch(searchPokemons(name));
+            // Verifico que el Pokemon exista. Si no existe, pasa al catch
+            await axios(`http://localhost:3001/pokemons/name?name=${name}`)
         } catch (error) {
+            // Si el Pokemon no existe:
             alert(`Pokemon with name ${name[0].toUpperCase() + name.slice(1)} not found`)   
         }
        
+        // Reseteo la barra de búsqueda para que quede vacía
         setName('');
     }
 
-    //! Lo pasé a Cards
-    // const showAll = () => {
-    //     dispatch(getPokemons());
-    // }
-
     return <div className={style.barContainer}>
-        <input type="text" id="searchBar" placeholder="Search Pokemon by name" autoComplete="off" disabled={pathname === '/form'} onChange={handleChange} value={name} className={style.bar}/>
+        <input type="text" id="searchBar" placeholder="Search Pokemon by name" autoComplete="off" disabled={pathname === '/form' || pathname.includes('/detail')} onChange={handleChange} value={name} className={style.bar}/>
         <div className={style.buttonContainer}>
             <button onClick={searchPokemon} disabled={pathname === '/form'} className={style.button}><img src="https://icones.pro/wp-content/uploads/2021/06/icone-loupe-noir.png" alt="search" width='25em'/></button>
         </div>

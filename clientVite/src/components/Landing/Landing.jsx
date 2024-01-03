@@ -9,15 +9,16 @@ export default function Landing() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // Envío al reducer los types y los Pokemons
     useEffect(() => {
         dispatch(getTypes());
         dispatch(getPokemons());
     }, [])
 
-    
-  const handleLogin = () => {
-    navigate('/home')
-  }
+    // Ingreo a la página sin identificación de usuario
+    const handleLogin = () => {
+      navigate('/home')
+    }
 
     return <div className={style.div}> 
      <div className={style.text}>

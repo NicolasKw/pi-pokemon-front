@@ -3,6 +3,7 @@ const axios = require('axios')
 
 module.exports = async function postPokemon(req, res) {
     try {
+            // Obtengo los atributos por body
             const { 
                 name, 
                 hp, 
@@ -42,7 +43,9 @@ module.exports = async function postPokemon(req, res) {
                 typesNames: typesNames
             }   
             createdPokemon
+                // Si se creó un nuevo Pokemon:
                 ? res.status(201).json(response)
+                // Si el Pokemons ya existía:
                 : res.status(304).json();
         
     } catch (error) {

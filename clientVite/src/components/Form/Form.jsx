@@ -13,6 +13,7 @@ export default function Form() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
+    // Creo una variable local donde voy a guardar toda la data ingresada por el usuario
     const [newPokemon, setNewPokemon] = useState({
         name: '',
         hp: '',
@@ -51,6 +52,7 @@ export default function Form() {
     const handleCheckbox = (event) => {
         const { checked, value } = event.target;
         
+        // Si tilda la casilla
         if(checked) {
             setNewPokemon ({
                 ...newPokemon,
@@ -60,6 +62,7 @@ export default function Form() {
                 ...newPokemon,
                 typesNames: [...newPokemon.typesNames, value]
             }))
+        // Si destilda la casilla
         } else {
             setNewPokemon ({
                 ...newPokemon,

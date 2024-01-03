@@ -11,6 +11,7 @@ function App() {
 
   const { pathname } = useLocation();
 
+  // Cargo los types en la DB
   useEffect(() => {
     const downloadTypes = async () => {
       try {

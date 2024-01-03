@@ -5,12 +5,14 @@ import style from "./Detail.module.css"
 
 export default function Detail() {
 
+    // Obtengo el id por params
     const { idPokemon } = useParams();
 
     const [pokemon, setPokemon] = useState({})
 
     const [image, setImage] = useState('');
 
+    // Imagen de "No Image Available"
     const noImage = 'https://vignette.wikia.nocookie.net/hanabira/images/6/60/No_Image_Available.png/revision/latest?cb=20180619160503'
 
     useEffect(() => {
@@ -25,13 +27,13 @@ export default function Detail() {
         downloadData();
     }, [idPokemon]);
 
-    
+    // GIF de loading mientras carga la data
     if(!pokemon.name) {
         return <div><img src="https://p-okedex.vercel.app/static/media/pokeball.2affaaf5.gif" alt="loading" className={style.loading}/></div>
     }
     const { id, name, hp, attack, defense, speed, height, weight, imageClassic, image3d, imageArtistic, typesNames } = pokemon;
 
-
+    // Carrousel de imágenes
     const changeImage = (event) => {
         
         const imagesArray = [imageClassic];

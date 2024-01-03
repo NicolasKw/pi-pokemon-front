@@ -66,20 +66,6 @@ export function filters(filters) {
     }
 }
 
-// export function orderByName(orderBy) {
-//     return {
-//         type: NAME_ORDER,
-//         payload: orderBy
-//     }
-// }
-
-// export function orderByAttack(orderBy) {
-//     return {
-//         type: ATTACK_ORDER,
-//         payload: orderBy
-//     }
-// }
-
 export function orderPokemons(orders) {
     return {
         type: ORDER_POKEMONS,

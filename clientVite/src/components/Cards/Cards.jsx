@@ -7,11 +7,13 @@ import style from "./Cards.module.css"
 
 export default function Cards() {
 
-    // Estados locales
+    // Estados locales para el paginado
     const pokemonsPerPage = 12;
     const [minRenderedPokemon, setMinRenderedPokemon] = useState(0);
     const [maxRenderedPokemon, setMaxRenderedPokemon] = useState(pokemonsPerPage);
     const [currentPage, setCurrentPage] = useState(1)
+
+    // Estado local para el manejo de la animación de loading
     const [pokemonsLoadingComplete, setPokemonsLoadingComplete] = useState(true);
 
     // Estados globales
@@ -40,35 +42,33 @@ export default function Cards() {
 
     const dispatch = useDispatch();
     
-    // Variable auxiliar para habilitar los filtros, que utilizo en el useEffect
-    let loadNum = 0;
+    // // Variable auxiliar para habilitar los filtros, que utilizo en el useEffect
+    // // let loadNum = 0;
     
     useEffect(() => {
-        console.log(1)
         // Si estoy en una página distinta a la primera y busco un Pokemon:
         if(searchAux) {
-            console.log(2)
             setMinRenderedPokemon(0);
             setMaxRenderedPokemon(pokemonsPerPage);
             return setCurrentPage(1);
         }
-        // Si no hay Pokemons o filtros cargados y ningún filtro aplicado
+        // Si no hay Pokemons o filtros cargados y ningún filtro aplicado (si no vengo de la Landing)
         if((!allPokemons.length || !types.length) && (filter.typeFilter === 'all' && filter.originFilter === 'all')) {
-            console.log(3)
             setPokemonsLoadingComplete(false);
             dispatch(getTypes());
+            dispatch(filters(filter));
+            dispatch(orderPokemons(order));
             const downloadedPokemons = dispatch(getPokemons());
             // Habilito los filtros una vez que cargaron los Pokemons
             downloadedPokemons.then(() => {
-                console.log(4)
-                // Este bloque de código se ejecuta 2 veces:
-                // 1) Cuando se resuelve la promesa donwloadedPokemons
-                // 2) Cuando terminan de cargarse todos los Pokemons -> Acá quiero que se habiliten los filtros
-                loadNum ++; 
-                loadNum === 2 && setPokemonsLoadingComplete(true);
+                setPokemonsLoadingComplete(true);
+                // // Este bloque de código se ejecuta 2 veces:
+                // // 1) Cuando se resuelve la promesa donwloadedPokemons
+                // // 2) Cuando terminan de cargarse todos los Pokemons -> Acá quiero que se habiliten los filtros
+                // // loadNum ++; 
+                // // loadNum === 2 && setPokemonsLoadingComplete(true);
             })
         }
-        console.log(5)
         dispatch(filters(filter));
         dispatch(orderPokemons(order));
     }, [filter, order, searchAux])
@@ -106,6 +106,8 @@ export default function Cards() {
         // Botón Show all
         if(event.target.value === 'showAll') {
             dispatch(getPokemons());
+            console.log(selectedPokemons);
+            console.log(renderedPokemons)
         }
     }
 
