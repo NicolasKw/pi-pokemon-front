@@ -76,21 +76,22 @@ export default function Form() {
         event.preventDefault();
 
         try {
-            const { data } = await axios.post('http://localhost:3001/pokemons/', newPokemon); // Creo y obtengo el nuevo registro
-            dispatch(addPokemon(data)) // Actualizo el estado global
-            alert(`Pokemon "${data.name[0].toUpperCase() + data.name.slice(1)}" has been created successfully with ID ${data.id}`);
-            navigate('/home') // Redirijo automáticamente a home
+            // Verifico que no haya un Pokemon creado con el mismo nombre
+            const { data } = await axios(`http://localhost:3001/pokemons/name?name=${newPokemon.name}`)
+            alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" already exists. Please choose another name`);
         } catch (error) {
             try {
+                // Creo y obtengo el nuevo registro
+                const { data } = await axios.post('http://localhost:3001/pokemons/', newPokemon); 
+                // Actualizo el estado global
+                dispatch(addPokemon(data)) 
+                // Muestro mensaje de éxito al usuario
+                alert(`Pokemon "${data.name[0].toUpperCase() + data.name.slice(1)}" has been created successfully with ID ${data.id}`);
+                // Redirijo automáticamente a Home
+                navigate('/home')
+            } catch (error) {
                 // Si hay errores de validación
                 if(Object.keys(errors).length) alert("Pokemon creation failed: data is missing");
-                // Si ya se creó un Pokemon igual previamente
-                else {
-                    const { data } = await axios(`http://localhost:3001/pokemons/name?name=${newPokemon.name}`);
-                    alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" has been created already`);
-                }
-            } catch (error) {
-                console.log({error});                
             }
         }
 

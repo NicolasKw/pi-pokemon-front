@@ -1,9 +1,13 @@
-    import { GET_POKEMONS, GET_TYPES, DELETE_POKEMON, FILTERS, NAME_ORDER, ATTACK_ORDER, ADD_POKEMON, SEARCH_POKEMONS} from './actionsTypes';
+    import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, FILTERS, ORDER_POKEMONS, SEARCH_POKEMONS} from './actionsTypes';
 
     const initialState = {
         pokemons: [],
         allPokemons: [],
         types: [],
+        typeFilter: 'all',
+        originFilter: 'all',
+        nameOrder: 'none',
+        attackOrder: 'none',
         searchAux: false
     }
 
@@ -45,6 +49,8 @@
                 if(payload.originFilter === 'API'){
                     return {
                         ...state,
+                        originFilter: 'API',
+                        typeFilter: payload.typeFilter,
                         pokemons: state.allPokemons.filter(pokemon => {
                             if(payload.typeFilter !== 'all') return pokemon.typesNames.includes(payload.typeFilter) && (typeof pokemon.id === 'number')
                             else return (typeof pokemon.id === 'number')
@@ -53,6 +59,8 @@
                 } else if(payload.originFilter === 'DB') {
                     return {
                         ...state,
+                        originFilter: 'DB',
+                        typeFilter: payload.typeFilter,
                         pokemons: state.allPokemons.filter(pokemon => {
                             if(payload.typeFilter !== 'all') return pokemon.typesNames.includes(payload.typeFilter) && (typeof pokemon.id !== 'number')
                             else return (typeof pokemon.id !== 'number')
@@ -61,39 +69,51 @@
                 } else {
                     return {
                         ...state,
+                        originFilter: '',
+                        typeFilter: payload.typeFilter,
                         pokemons: state.allPokemons.filter(pokemon => {
                             if(payload.typeFilter !== 'all') return pokemon.typesNames.includes(payload.typeFilter)
                             else return pokemon.typesNames
                         })
                 }
             }
-            
-            case NAME_ORDER:
-                if(payload === 'A') {
-                    return {
-                        ...state,
-                        pokemons: state.pokemons.sort((a, b) => a.name.localeCompare(b.name))
-                    }
-                } else if(payload === 'D') {
-                    return {
-                    ...state,
-                    pokemons: state.pokemons.sort((a, b) => b.name.localeCompare(a.name))}
-                } else return {
-                    ...state,
-                    pokemons: state.pokemons.sort((a, b) => a.id - b.id)
+
+            case ORDER_POKEMONS:
+                if(payload.nameOrder !== 'none') {
+                    if(payload.nameOrder === 'A') {
+                        return {
+                            ...state,
+                            nameOrder: payload.nameOrder,
+                            attackOrder: 'none',
+                            pokemons: state.pokemons.sort((a, b) => a.name.localeCompare(b.name))
+                        }
+                    } else if(payload.nameOrder === 'D') {
+                        return {
+                            ...state,
+                            nameOrder: payload.nameOrder,
+                            attackOrder: 'none',
+                            pokemons: state.pokemons.sort((a, b) => b.name.localeCompare(a.name))
+                        }
                 }
-            
-            case ATTACK_ORDER:
-                if(payload === 'A') {
-                    return {
+                } else if (payload.attackOrder !== 'none') {
+                    if(payload.attackOrder === 'A') {
+                        return {
+                            ...state,
+                            attackOrder: payload.attackOrder,
+                            nameOrder: 'none',
+                            pokemons: state.pokemons.sort((a, b) => a.attack - b.attack)
+                        }
+                    } else if(payload.attackOrder === 'D') {
+                        return {
                         ...state,
-                        pokemons: state.pokemons.sort((a, b) => a.attack - b.attack)}
-                } else if(payload === 'D') {
-                    return {
-                    ...state,
-                    pokemons: state.pokemons.sort((a, b) => b.attack - a.attack)}
+                        attackOrder: payload.attackOrder,
+                        nameOrder: 'none',
+                        pokemons: state.pokemons.sort((a, b) => b.attack - a.attack)}
+                }
                 } else return {
                     ...state,
+                    nameOrder: 'none',
+                    attackOrder: 'none',
                     pokemons: state.pokemons.sort((a, b) => a.id - b.id)
                 }
 

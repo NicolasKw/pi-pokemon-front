@@ -1,4 +1,5 @@
 const { Pokemon, Types } = require('../db');
+const axios = require('axios')
 
 module.exports = async function postPokemon(req, res) {
     try {

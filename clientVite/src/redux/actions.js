@@ -1,4 +1,4 @@
-import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, FILTERS, NAME_ORDER, ATTACK_ORDER, SEARCH_POKEMONS } from "./actionsTypes";
+import { GET_POKEMONS, GET_TYPES, ADD_POKEMON, DELETE_POKEMON, FILTERS, ORDER_POKEMONS, SEARCH_POKEMONS } from "./actionsTypes";
 import axios from "axios";
 
 
@@ -66,17 +66,24 @@ export function filters(filters) {
     }
 }
 
-export function nameOrder(orderBy) {
-    return {
-        type: NAME_ORDER,
-        payload: orderBy
-    }
-}
+// export function orderByName(orderBy) {
+//     return {
+//         type: NAME_ORDER,
+//         payload: orderBy
+//     }
+// }
 
-export function attackOrder(orderBy) {
+// export function orderByAttack(orderBy) {
+//     return {
+//         type: ATTACK_ORDER,
+//         payload: orderBy
+//     }
+// }
+
+export function orderPokemons(orders) {
     return {
-        type: ATTACK_ORDER,
-        payload: orderBy
+        type: ORDER_POKEMONS,
+        payload: orders
     }
 }
 

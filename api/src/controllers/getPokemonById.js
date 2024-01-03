@@ -7,7 +7,7 @@ module.exports = async function getPokemonById (req,res) {
     const { idPokemon } = req.params;
 
     //* Si el id tiene una longitud menor a 5, busco al Pokemons en la API
-    if(idPokemon.length < 5) {
+    if(idPokemon.length < 10) {
 
         try {
             const pokemon = await axios(`${URL_BASE}${idPokemon}`);
