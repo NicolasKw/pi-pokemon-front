@@ -3,6 +3,7 @@ const { Pokemon } = require('../db');
 
 const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 
+//! Debería ocuparse solamente de recibir lo que viene y enviarlo al handler
 module.exports = async function getPokemons(req, res) {
     try {
 
