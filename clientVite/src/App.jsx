@@ -10,7 +10,7 @@ import Nav from './components/Nav/Nav';
 function App() {
 
   // axios.defaults.baseURL = 'http://localhost:3001';
-  axios.defaults.baseURL = 'pi-pokemon-back-production-1f13.up.railway.app';
+  axios.defaults.baseURL = 'http://pi-pokemon-back-production-1f13.up.railway.app';
 
   const { pathname } = useLocation();
 
