@@ -6,6 +6,7 @@ import Cards from './components/Cards/Cards';
 import Form from './components/Form/Form';
 import Detail from './components/Detail/Detail';
 import Nav from './components/Nav/Nav';
+import style from './App.module.css';
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
   }, [])
 
 
-  return <div>
+  return <div className={style.app}>
     {pathname !== '/' && <Nav />}
     <Routes>
       <Route path='/' element={<Landing />} />
