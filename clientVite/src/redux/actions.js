@@ -6,7 +6,7 @@ export function getPokemons() {
 
     return async (dispatch) => {
         try {
-            const { data } = await axios('http://localhost:3001/pokemons');
+            const { data } = await axios('/pokemons');
 
             dispatch({
                 type: GET_POKEMONS,
@@ -23,7 +23,7 @@ export function getTypes() {
 
     return async (dispatch) => {
         try {
-            const { data } = await axios('http://localhost:3001/types');
+            const { data } = await axios('/types');
 
             dispatch({
                 type: GET_TYPES,
@@ -46,7 +46,7 @@ export function deletePokemon(id) {
 
     return async (dispatch) => {
         try {
-            (typeof id !== 'number') && await axios.delete(`http://localhost:3001/pokemons/${id}`)
+            (typeof id !== 'number') && await axios.delete(`/pokemons/${id}`)
             
             dispatch ({
                 type: DELETE_POKEMON,
@@ -77,7 +77,7 @@ export function searchPokemons(name) {
 
     return async (dispatch) => {
         try {
-            const { data } = await axios(`http://localhost:3001/pokemons/name?name=${name}`);
+            const { data } = await axios(`/pokemons/name?name=${name}`);
 
             dispatch({
                 type: SEARCH_POKEMONS,

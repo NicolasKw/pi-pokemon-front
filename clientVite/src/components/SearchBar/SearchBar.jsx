@@ -25,7 +25,7 @@ export default function SearchBar() {
         try {
             dispatch(searchPokemons(name));
             // Verifico que el Pokemon exista. Si no existe, pasa al catch
-            await axios(`http://localhost:3001/pokemons/name?name=${name}`)
+            await axios(`/pokemons/name?name=${name}`)
         } catch (error) {
             // Si el Pokemon no existe:
             alert(`Pokemon with name ${name[0].toUpperCase() + name.slice(1)} not found`)   

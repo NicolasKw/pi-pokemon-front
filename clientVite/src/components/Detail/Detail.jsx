@@ -18,7 +18,7 @@ export default function Detail() {
     useEffect(() => {
         const downloadData = async() => {
             try {
-                const { data } = await axios(`http://localhost:3001/pokemons/${idPokemon}`);
+                const { data } = await axios(`/pokemons/${idPokemon}`);
                 setPokemon(data);
             } catch (error) {
                 console.log(error);
