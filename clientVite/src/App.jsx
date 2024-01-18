@@ -9,13 +9,16 @@ import Nav from './components/Nav/Nav';
 
 function App() {
 
+  // axios.defaults.baseURL = 'http://localhost:3001';
+  axios.defaults.baseURL = 'pi-pokemon-back-production-1f13.up.railway.app';
+
   const { pathname } = useLocation();
 
   // Cargo los types en la DB
   useEffect(() => {
     const downloadTypes = async () => {
       try {
-        await axios('http://localhost:3001/types')
+        await axios('/types')
       } catch (error) {
         console.log(error);
       }

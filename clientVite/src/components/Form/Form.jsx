@@ -80,12 +80,12 @@ export default function Form() {
 
         try {
             // Verifico que no haya un Pokemon creado con el mismo nombre
-            const { data } = await axios(`http://localhost:3001/pokemons/name?name=${newPokemon.name}`)
+            const { data } = await axios(`/pokemons/name?name=${newPokemon.name}`)
             alert(`Pokemon with name "${newPokemon.name[0].toUpperCase() + newPokemon.name.slice(1)}" already exists. Please choose another name`);
         } catch (error) {
             try {
                 // Creo y obtengo el nuevo registro
-                const { data } = await axios.post('http://localhost:3001/pokemons/', newPokemon); 
+                const { data } = await axios.post('/pokemons/', newPokemon); 
                 // Actualizo el estado global
                 dispatch(addPokemon(data)) 
                 // Muestro mensaje de éxito al usuario
